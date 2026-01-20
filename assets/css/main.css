@@ -77,16 +77,210 @@ a:hover {
   text-decoration: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* 1. Typography Defaults (Kept at top) */
+h2, h3, h4, h5, h6 {
   color: var(--heading-color);
   font-family: var(--heading-font);
 }
 
+/* 2. Hero Container Base */
+#hero {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000b1a; 
+  display: flex;
+  align-items: center;
+  padding: 80px 0; /* Space for mobile navigation */
+}
+
+/* 3. Particles Background (Stays behind everything) */
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(135deg, #001f3f 0%, #000000 100%);
+  z-index: 1;
+}
+
+/* 4. The Grid & Glassmorphism Logic */
+#hero .container {
+  position: relative;
+  z-index: 2; /* Sits above particles */
+}
+/* ==========================================================================
+   1. Typography & Global Defaults
+   ========================================================================== */
+h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+
+/* ==========================================================================
+   2. Hero Section Layout
+   ========================================================================== */
+#hero {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000b1a; /* Dark Navy base */
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
+}
+
+/* Particle Background Layer */
+#particles-js {
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    /* A deep "Tech Blue" base */
+    background-color: #000b1a; 
+    /* Gradient from dark navy to a brighter midnight blue */
+    background-image: linear-gradient(135deg, #186ec5 0%, #7fb4e9 100%);
+    z-index: 1;
+}
+
+/* Ensuring container sits above the particles */
+#hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   3. Glassmorphism Content Box
+   ========================================================================== */
+/* Initial state of the content before animation starts */
+.hero-content-fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* The class that triggers the animation */
+.hero-content-fade.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional: Stagger the heading and paragraph for a premium feel */
+#hero h1 {
+  transition-delay: 0.2s;
+}
+#hero p {
+  transition-delay: 0.4s;
+}
+#hero .btn-watch-video {
+  transition-delay: 0.6s;
+}
+   /* Targets the column containing your text/button in the Bootstrap row */
+#hero .col-lg-6.d-flex.flex-column {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  /* Allows mouse interaction with particles through the glass box */
+  pointer-events: none; 
+}
+
+/* Essential: Re-enabling pointer events for text and buttons so they work */
+#hero h1, 
+#hero p, 
+#hero .btn-watch-video {
+  pointer-events: auto;
+}
+
+#hero h1 {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+#hero p {
+  color: rgba(255, 255, 255, 0.8); /* Muted white for readability */
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* ==========================================================================
+   4. Interactive "Watch Video" Button
+   ========================================================================== */
+#hero .btn-watch-video {
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+  width: fit-content;
+}
+
+#hero .btn-watch-video i {
+  font-size: 2.5rem;
+  margin-right: 12px;
+  color: #fff; /* Darker cyan accent */
+  transition: transform 0.3s ease;
+}
+
+/* Interaction Effects */
+#hero .btn-watch-video:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+#hero .btn-watch-video:hover i {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   6. Preloader Styling
+   ========================================================================== */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000b1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* ==========================================================================
+   7. Mobile Responsiveness
+   ========================================================================== */
+@media (max-width: 991px) {
+  #hero {
+    padding-top: 120px;
+    text-align: center;
+  }
+  
+  #hero .col-lg-6.d-flex.flex-column {
+    align-items: center;
+    margin: 0 15px;
+  }
+}
+
+@media (max-width: 575px) {
+  #hero .col-lg-6.d-flex.flex-column {
+    padding: 25px;
+    border-radius: 15px;
+  }
+  
+  #hero h1 {
+    font-size: 1.8rem;
+  }
+}
 /* PHP Email Form Messages
 ------------------------------*/
 .php-email-form .error-message {
@@ -145,7 +339,6 @@ h6 {
 .header {
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 15px 0;
   transition: all 0.5s;
   z-index: 997;
 }
@@ -735,7 +928,7 @@ section,
 # Clients Section
 --------------------------------------------------------------*/
 .clients {
-  padding: 20px 0;
+  padding: 60px 0; /* Increased vertical padding for better section breathing room */
 }
 
 .clients .client-logo {
@@ -743,29 +936,44 @@ section,
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  height: 120px; /* Fixed height ensures all logos are vertically aligned */
 }
 
 .clients .client-logo img {
-  padding: 20px 40px;
-  max-width: 250px;
-  min-width: 200px;
-  height: auto;
-  transition: 0.3s;
-  opacity: 0.5;
-  filter: grayscale(100);
+  padding: 10px; /* Reduced padding to prevent logos from looking too small */
+  max-width: 100%; /* Ensures logo doesn't bleed out of its column */
+  max-height: auto; /* Controls the height for a uniform row appearance */
+  width: auto;
+  transition: all 0.4s ease-in-out;
+  opacity: 0.6;
+  filter: grayscale(100%);
 }
 
 .clients .client-logo img:hover {
-  filter: none;
+  filter: grayscale(0%);
   opacity: 1;
+  transform: scale(1.08); /* Subtle zoom effect on hover */
 }
 
-@media (max-width: 640px) {
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .clients .client-logo {
+    height: 100px;
+  }
   .clients .client-logo img {
-    padding: 20px;
+    max-height: 60px;
   }
 }
 
+@media (max-width: 640px) {
+  .clients .client-logo {
+    height: 80px;
+  }
+  .clients .client-logo img {
+    padding: 15px;
+    max-height: 50px;
+  }
+}
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
@@ -832,33 +1040,76 @@ section,
 /*--------------------------------------------------------------
 # Stats Section
 --------------------------------------------------------------*/
+.stats {
+  padding: 60px 0;
+}
+
 .stats .stats-item {
-  padding: 10px;
+  padding: 20px;
+  background: color-mix(in srgb, var(--default-color), transparent 97%); /* Subtle background tint */
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.stats .stats-item:hover {
+  transform: translateY(-5px); /* Professional subtle lift */
 }
 
 .stats .stats-item i {
-  font-size: 44px;
+  font-size: 38px; /* Slightly reduced for better balance with text */
   color: var(--accent-color);
-  line-height: 0;
-  margin-right: 15px;
+  line-height: 1;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .stats .stats-item .purecounter {
   color: var(--heading-color);
-  font-size: 40px;
+  font-size: 36px;
   display: block;
-  font-weight: 700;
-  line-height: 40px;
+  font-weight: 800; /* Extra bold for impact */
+  line-height: 1;
+  margin-bottom: 5px;
 }
 
 .stats .stats-item p {
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  padding: 15px 0 0 0;
+  color: var(--default-color);
+  padding: 0;
   margin: 0;
-  font-family: var(--heading-font);
-  font-size: 14px;
+  font-family: var(--default-font);
+  font-size: 15px;
+  line-height: 1.4;
 }
 
+.stats .stats-item p strong {
+  display: block;
+  color: var(--heading-color);
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.stats .stats-item p span {
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  font-size: 13px;
+  display: block;
+}
+
+/* Ensure image on the left looks professional */
+.stats img {
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .stats .stats-item {
+    padding: 15px;
+  }
+  .stats .stats-item .purecounter {
+    font-size: 28px;
+  }
+}
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
