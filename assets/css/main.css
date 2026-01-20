@@ -848,17 +848,47 @@ section,
 .section-title p {
   margin-bottom: 0;
 }
-
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
-  min-height: 70vh;
+  min-height: 100vh;
   position: relative;
   padding: 80px 0 60px 0;
   display: flex;
   align-items: center;
+  /* Lighter Blue Gradient Background */
+  background: linear-gradient(135deg, #a8e6ff 0%, #4682b4 100%) !important;
+  overflow: hidden;
+}
+
+/* Dedicated container for the Three.js particles */
+#vanta-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Sits behind text */
+}
+
+/* Softens the white dots into glowing orbs */
+#vanta-canvas canvas {
+  display: block;
+  filter: blur(1px) drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2; /* Sits above particles */
+  pointer-events: none; /* Let mouse moves hit the canvas below */
+}
+
+/* Reactivate pointer events for buttons */
+.hero .container a, 
+.hero .container button {
+  pointer-events: auto;
 }
 
 .hero h1 {
@@ -866,53 +896,94 @@ section,
   font-size: 48px;
   font-weight: 700;
   line-height: 56px;
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 .hero p {
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  color: rgba(255, 255, 255, 0.9);
   margin: 5px 0 20px 0;
   font-size: 22px;
   font-weight: 400;
 }
+/* --- Glassmorphism Card --- */
+.glass-card {
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  backdrop-filter: blur(12px); /* The frost effect */
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  pointer-events: auto; /* Ensures links remain clickable */
+}
+/* --- Hero Text Animation --- */
 
-.hero .btn-get-started {
-  font-family: var(--heading-font);
-  font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 10px 36px;
-  border-radius: 50px;
+/* Initial state: Hidden and moved down */
+.hero-content-fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* State when JS triggers the animation */
+.hero-content-fade.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ensure the heading and p are styled for the new background */
+.hero h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for better readability */
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.95);
+  margin: 15px 0 30px 0;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Video link styling */
+.btn-watch-video {
+  color: #ffffff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
   transition: 0.3s;
-  border: 2px solid var(--accent-color);
 }
 
-.hero .btn-get-started:hover {
-  color: var(--contrast-color);
-  background: var(--accent-color);
+.btn-watch-video i {
+  font-size: 32px;
+  transition: 0.3s;
+  color: #ffffff;
 }
 
-.hero .animated {
-  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+.btn-watch-video:hover {
+  color: #a8e6ff;
 }
 
+.btn-watch-video:hover i {
+  color: #a8e6ff;
+}
 @media (max-width: 640px) {
-  .hero h1 {
-    font-size: 28px;
-    line-height: 36px;
-  }
-
-  .hero p {
-    font-size: 18px;
-    line-height: 24px;
-    margin-bottom: 30px;
-  }
-
+  .hero h1 { font-size: 28px; line-height: 36px; }
+  .hero p { font-size: 18px; }
+}
   .hero .btn-get-started,
   .hero .btn-watch-video {
     font-size: 13px;
   }
-}
+
 
 @keyframes up-down {
   0% {

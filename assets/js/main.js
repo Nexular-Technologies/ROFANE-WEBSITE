@@ -1,227 +1,148 @@
 /**
-* Combined & Optimized JS for Quality Engineering Landing Page
-* Improvements: Fixed Duplicate Declarations, Throttled Scroll, and Safe Initialization.
+* Combined & Optimized JS for Rofane Consulting
+* Features: Static-Angle Three.js Particle Wave (White, 8.2 size)
+* Interaction: No Cursor Movement (Fixed Perspective)
 */
 (function() {
   "use strict";
 
   /**
-   * 1. PRELOADER & HERO ANIMATION
-   * Merged logic to prevent duplicate declarations and sync animations.
+   * 1. PRELOADER & HERO TEXT ANIMATION
+   * Triggers the entry of the Glassmorphism card.
    */
   const preloader = document.querySelector('#preloader');
   const heroContent = document.querySelector('.hero-content-fade');
 
-  if (preloader) {
-    // We use 'load' to ensure the user doesn't see a flash of unstyled content
-    window.addEventListener('load', () => {
+  window.addEventListener('load', () => {
+    if (preloader) {
       setTimeout(() => {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
         
-        // Trigger hero text animation immediately as preloader starts to fade
         if (heroContent) {
           heroContent.classList.add('animate-in');
         }
 
-        // Remove from DOM after transition finishes
         setTimeout(() => preloader.remove(), 500);
       }, 350); 
-    });
-  }
+    } else {
+      if (heroContent) heroContent.classList.add('animate-in');
+    }
+  });
 
   /**
-   * 2. GLOBAL SCROLL HANDLER (Performance Optimized)
-   * Using requestAnimationFrame to prevent "jank" during scrolling.
+   * 2. THREE.JS PARTICLE WAVE (FIXED ANGLE)
+   * Camera and dots are locked and do not react to cursor position.
    */
-  const selectBody = document.querySelector('body');
+  window.addEventListener('load', () => {
+    const container = document.getElementById('vanta-canvas');
+    if (!container || typeof THREE === 'undefined') return;
+
+    // Configuration
+    const SEPARATION = 45, AMOUNTX = 100, AMOUNTY = 40;
+    let camera, scene, renderer, particles, count = 0;
+
+    function init() {
+      // SETUP CAMERA: Fixed at a specific angle (X=0, Y=400, Z=1000)
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+      camera.position.set(0, 400, 1000); 
+
+      scene = new THREE.Scene();
+
+      // SETUP PARTICLES GRID
+      const numParticles = AMOUNTX * AMOUNTY;
+      const positions = new Float32Array(numParticles * 3);
+
+      let i = 0;
+      for (let ix = 0; ix < AMOUNTX; ix++) {
+        for (let iy = 0; iy < AMOUNTY; iy++) {
+          positions[i] = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2); // x
+          positions[i + 1] = 0; // y
+          positions[i + 2] = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2); // z
+          i += 3;
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      // MATERIAL: Large White Dots (8.2 size)
+      const material = new THREE.PointsMaterial({
+        color: 0xffffff, 
+        size: 8.2, 
+        transparent: true,
+        opacity: 0.7
+      });
+
+      particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      // RENDERER SETUP
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+
+      // RESPONSIVE RESIZE
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      render();
+    }
+
+    function render() {
+      // Ensure camera is always looking at the center of the scene
+      camera.lookAt(scene.position);
+
+      const positions = particles.geometry.attributes.position.array;
+      let i = 0;
+      for (let ix = 0; ix < AMOUNTX; ix++) {
+        for (let iy = 0; iy < AMOUNTY; iy++) {
+          // UNDULATING MOVEMENT: Fixed sine wave logic
+          positions[i + 1] = (Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50);
+          i += 3;
+        }
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      count += 0.04; // Speed of the wave
+    }
+
+    init();
+    animate();
+  });
+
+  /**
+   * 3. GLOBAL TEMPLATE LOGIC
+   * Initialization for Scroll handling, AOS, and GLightbox.
+   */
   const selectHeader = document.querySelector('#header');
   const scrollTop = document.querySelector('.scroll-top');
-  const navmenulinks = document.querySelectorAll('.navmenu a');
 
   function handleScroll() {
     const position = window.scrollY;
-
-    // Header sticky logic
     if (selectHeader) {
-      const isSticky = selectHeader.classList.contains('scroll-up-sticky') || 
-                       selectHeader.classList.contains('sticky-top') || 
-                       selectHeader.classList.contains('fixed-top');
-      if (isSticky) {
-        position > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
-      }
+      position > 100 ? document.body.classList.add('scrolled') : document.body.classList.remove('scrolled');
     }
-
-    // Scroll-to-top button visibility
     if (scrollTop) {
       position > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
-
-    // Navmenu Scrollspy (Active link tracking)
-    navmenulinks.forEach(link => {
-      if (!link.hash) return;
-      const section = document.querySelector(link.hash);
-      if (!section) return;
-      
-      const spyPos = position + 200;
-      if (spyPos >= section.offsetTop && spyPos <= (section.offsetTop + section.offsetHeight)) {
-        if (!link.classList.contains('active')) {
-          document.querySelectorAll('.navmenu a.active').forEach(active => active.classList.remove('active'));
-          link.classList.add('active');
-        }
-      }
-    });
   }
 
-  // Throttle scroll events to 60fps using requestAnimationFrame
-  window.addEventListener('scroll', () => {
-    window.requestAnimationFrame(handleScroll);
-  });
-  window.addEventListener('load', handleScroll);
+  window.addEventListener('scroll', () => window.requestAnimationFrame(handleScroll));
 
-  /**
-   * 3. MOBILE NAVIGATION
-   */
-  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
-  
-  function toggleMobileNav() {
-    document.body.classList.toggle('mobile-nav-active');
-    if (mobileNavToggleBtn) {
-      mobileNavToggleBtn.classList.toggle('bi-list');
-      mobileNavToggleBtn.classList.toggle('bi-x');
-    }
-  }
-
-  if (mobileNavToggleBtn) {
-    mobileNavToggleBtn.addEventListener('click', toggleMobileNav);
-  }
-
-  // Close mobile nav when clicking a link
-  document.querySelectorAll('#navmenu a').forEach(navLink => {
-    navLink.addEventListener('click', () => {
-      if (document.body.classList.contains('mobile-nav-active')) toggleMobileNav();
-    });
-  });
-
-  // Handle dropdowns in mobile view
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(dropdownToggle => {
-    dropdownToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      const subMenu = this.parentNode.nextElementSibling;
-      if (subMenu) subMenu.classList.toggle('dropdown-active');
-      e.stopImmediatePropagation();
-    });
-  });
-
-  /**
-   * 4. SCROLL TOP CLICK
-   */
-  if (scrollTop) {
-    scrollTop.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-  /**
-   * 5. EXTERNAL PLUGINS INITIALIZATION
-   */
   window.addEventListener('load', () => {
-    
-    // Particles.js (Check if library exists)
-    if (document.getElementById('particles-js') && typeof particlesJS !== 'undefined') {
-      particlesJS("particles-js", {
-        "particles": {
-          "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-          "color": { "value": ["#0099cc", "#0055ff", "#32a0df"] },
-          "shape": { "type": "circle" },
-          "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1 } },
-          "size": { "value": 3, "random": true },
-          "line_linked": { "enable": true, "distance": 150, "color": "#fff", "opacity": 0.5, "width": 1 },
-          "move": { "enable": true, "speed": 1.5, "direction": "none", "out_mode": "out" }
-        },
-        "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" } } },
-        "retina_detect": true
-      });
-    }
-
-    // AOS (Animations on Scroll)
     if (typeof AOS !== 'undefined') {
-      AOS.init({
-        duration: 600,
-        easing: 'ease-in-out',
-        once: true,
-        mirror: false
-      });
+      AOS.init({ duration: 600, easing: 'ease-in-out', once: true });
     }
-
-    // GLightbox
     if (typeof GLightbox !== 'undefined') {
       GLightbox({ selector: '.glightbox' });
-    }
-
-    // PureCounter
-    if (typeof PureCounter !== 'undefined') {
-      new PureCounter();
-    }
-
-    // Swiper
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      const configEl = swiperElement.querySelector(".swiper-config");
-      if (configEl) {
-        let config = JSON.parse(configEl.innerHTML.trim());
-        new Swiper(swiperElement, config);
-      }
-    });
-
-    // Isotope (Portfolio/Gallery Layout)
-    if (typeof Isotope !== 'undefined') {
-      document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-        let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-        let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-        let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
-
-        let initIsotope;
-        // Ensure images are loaded before calculating layout
-        if (typeof imagesLoaded !== 'undefined') {
-          imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-            initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-              itemSelector: '.isotope-item',
-              layoutMode: layout,
-              filter: filter,
-              sortBy: sort
-            });
-          });
-        }
-
-        // Filter functionality
-        isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filterBtn) {
-          filterBtn.addEventListener('click', function() {
-            const activeFilter = isotopeItem.querySelector('.isotope-filters .filter-active');
-            if (activeFilter) activeFilter.classList.remove('filter-active');
-            this.classList.add('filter-active');
-            if (initIsotope) {
-              initIsotope.arrange({ filter: this.getAttribute('data-filter') });
-            }
-            if (typeof AOS !== 'undefined') AOS.refresh();
-          });
-        });
-      });
-    }
-
-    // Hash link correction (Handles smooth scrolling if URL has #section)
-    if (window.location.hash) {
-      let section = document.querySelector(window.location.hash);
-      if (section) {
-        setTimeout(() => {
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop || 0),
-            behavior: 'smooth'
-          });
-        }, 100);
-      }
     }
   });
 
