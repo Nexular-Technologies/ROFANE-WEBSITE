@@ -30,15 +30,13 @@
     .video-box { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
     .video-box img { width: 100%; transition: transform 0.5s ease; }
     .play-btn-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85px; height: 85px; background: #007bff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 35px; z-index: 2; }
-    .clients .swiper-slide img { opacity: 0.6; transition: 0.3s; filter: grayscale(100%); width: 140px; }
-    .clients .swiper-slide img:hover { opacity: 1; filter: none; }
     
-    /* Service Item Headings */
+    /* Grid Client Layout */
+    .client-logo img { opacity: 0.6; transition: 0.3s; filter: grayscale(100%); width: 100%; max-width: 140px; }
+    .client-logo img:hover { opacity: 1; filter: none; }
+    
     .service-item h4 { color: #4682b4; font-weight: 700; text-transform: uppercase; font-size: 16px; margin-bottom: 15px; transition: 0.3s; }
-    
-    /* Turning Heading White on Hover */
     .service-item:hover h4 { color: #ffffff !important; }
-
     .team-statement { font-style: italic; color: #555; border-left: 4px solid #4682b4; padding-left: 20px; margin-top: 30px; line-height: 1.6; }
     
     /* Recruitment Section Scaling */
@@ -101,6 +99,25 @@
               <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox play-btn-overlay"><i class="bi bi-play-fill"></i></a>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients" class="clients section light-background">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Our Clients and Partners</h2>
+        </div>
+        <div class="row gy-4 justify-content-center align-items-center">
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/DiscoveryBank.svg" class="img-fluid" alt="Discovery Bank"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/LibertyBank.svg" class="img-fluid" alt="Liberty Bank"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/TymeBank.svg" class="img-fluid" alt="TymeBank"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/stanlib.svg" class="img-fluid" alt="STANLIB"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/JSE.svg" class="img-fluid" alt="JSE"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/tcta.svg" class="img-fluid" alt="TCTA"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/fhc_consulting.svg" class="img-fluid" alt="FHC Consulting"></div>
+          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="assets/img/clients/Clients_logos/anchor_consulting.svg" class="img-fluid" alt="FHC Consulting"></div>
+
         </div>
       </div>
     </section>
@@ -192,7 +209,7 @@
             <div class="service-item position-relative">
               <i class="bi bi-kanban"></i>
               <h4>Project Management</h4>
-              <p>Our project managers are PMBoK or Prince2 certified, with extensive banking and project delivery experience.</p>
+              <p>Our project managers are PMBoK or Prince2 certified, with extensive banking and project delivery experience core to everything we do.</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
@@ -209,7 +226,7 @@
     <section id="recruitment" class="recruitment section light-background">
       <div class="container section-title" data-aos="fade-up">
         <h2>Recruitment Service Offering</h2>
-        <p>At Rofane Consulting, we understand that finding the right talent is crucial to driving business success.</p>
+        <p>At Rofane Consulting, we understand that finding the right talent is crucial to driving business success. Our recruitment services are designed to help organizations like yours identify, attract, and hire top professionals who can make a meaningful impact.</p>
       </div>
       <div class="container">
         <div class="row gy-5 align-items-center">
@@ -219,15 +236,15 @@
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
             <div class="info-block mb-4">
               <h4><i class="bi bi-person-check-fill me-2"></i> Talent Acquisition</h4>
-              <p>Our experienced recruiters will work closely with you to understand your hiring needs.</p>
+              <p>Our experienced recruiters will work closely with you to understand your hiring needs and identify the best candidates for your organization.</p>
             </div>
             <div class="info-block mb-4">
               <h4><i class="bi bi-search me-2"></i> Candidate Sourcing</h4>
-              <p>We utilize a range of sourcing strategies, including social media and professional networks.</p>
+              <p>We utilize a range of sourcing strategies, including social media, job boards, and professional networks, to find the most qualified candidates.</p>
             </div>
             <div class="info-block mb-4">
               <h4><i class="bi bi-person-video3 me-2"></i> Interview Support</h4>
-              <p>Our team can assist with interview preparation and conduct skills assessments.</p>
+              <p>Our team can assist with interview preparation, conduct skills assessments, and provide feedback to help you make informed hiring decisions.</p>
             </div>
             <div class="info-block mb-4">
               <h4><i class="bi bi-shield-check me-2"></i> Candidate Screening</h4>
