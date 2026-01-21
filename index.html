@@ -11,66 +11,40 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicons/favicon.svg">
   <link rel="shortcut icon" href="assets/img/favicons/favicon.ico">
   
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  
   <link href="assets/css/main.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   
   <style>
-    /* Custom styles for the Video Spotlight to match reference image */
     .video-spotlight { padding: 80px 0; background: #ffffff; }
-    .heading-accent { 
-      width: 45px; 
-      height: 3px; 
-      background-color: #4682b4; 
-      margin-bottom: 15px;
-      display: block;
-    }
-    .video-spotlight h2 {
-      font-size: 42px;
-      font-weight: 700;
-      color: #212529;
-      margin-bottom: 30px;
-    }
-    .video-spotlight p {
-      color: #555;
-      line-height: 1.6;
-      font-size: 17px;
-      max-width: 500px;
-    }
-    .watch-link {
-      display: inline-block;
-      margin-top: 30px;
-      color: #4682b4;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
+    .heading-accent { width: 45px; height: 3px; background-color: #4682b4; margin-bottom: 15px; display: block; }
+    .video-spotlight h2 { font-size: 42px; font-weight: 700; color: #212529; margin-bottom: 30px; }
+    .video-spotlight p { color: #555; line-height: 1.6; font-size: 17px; max-width: 500px; }
+    .watch-link { display: inline-block; margin-top: 30px; color: #4682b4; text-decoration: none; font-weight: 500; transition: 0.3s; }
     .watch-link:hover { color: #0056b3; text-decoration: underline; }
-    
     .video-box { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
     .video-box img { width: 100%; transition: transform 0.5s ease; }
-    
-    .play-btn-overlay { 
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 85px; height: 85px; background: #007bff; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; color: #fff;
-      font-size: 35px; transition: 0.3s; z-index: 2;
-    }
-    .video-box:hover .play-btn-overlay { background: #0056b3; transform: translate(-50%, -50%) scale(1.1); }
-
-    /* Client Carousel Styling */
+    .play-btn-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85px; height: 85px; background: #007bff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 35px; z-index: 2; }
     .clients .swiper-slide img { opacity: 0.6; transition: 0.3s; filter: grayscale(100%); width: 140px; }
     .clients .swiper-slide img:hover { opacity: 1; filter: none; }
+    
+    /* Service Item Headings */
+    .service-item h4 { color: #4682b4; font-weight: 700; text-transform: uppercase; font-size: 16px; margin-bottom: 15px; transition: 0.3s; }
+    
+    /* Turning Heading White on Hover */
+    .service-item:hover h4 { color: #ffffff !important; }
+
+    .team-statement { font-style: italic; color: #555; border-left: 4px solid #4682b4; padding-left: 20px; margin-top: 30px; line-height: 1.6; }
+    
+    /* Recruitment Section Scaling */
+    .recruitment .info-block i { font-size: 1.5rem; color: #4682b4; }
+    .recruitment .info-block h4 { color: #4682b4; font-weight: 700; text-transform: uppercase; font-size: 1.2rem; margin-bottom: 12px; }
+    .recruitment .info-block p { font-size: 1.15rem; line-height: 1.7; }
   </style>
 </head>
 
@@ -85,13 +59,14 @@
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#services-offering">Service Offering</a></li>
+          <li><a href="#services-core">Our Services</a></li>
+          <li><a href="#recruitment">Recruitment</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="#about">Get Started</a>
+      <a class="btn-getstarted" href="#contact">Get Started</a>
     </div>
   </header>
 
@@ -102,7 +77,7 @@
         <div class="row gy-4">
           <div class="col-lg-8 col-xl-7 glass-card hero-content-fade">
             <h1>Quality Engineering and Automation Services in Gauteng, South Africa</h1>
-            <p>We transform software quality from a defensive check to a proactive, embedded engineering discipline for measurable business outcomes.</p>
+            <p>Transforming software quality from a defensive check to a proactive engineering discipline for measurable business outcomes.</p>
           </div>
         </div>
       </div>
@@ -114,50 +89,17 @@
           <div class="col-lg-6 mb-5 mb-lg-0">
             <span class="heading-accent"></span>
             <h2>Insights from our Leadership</h2>
-            <p>Watch our CEO, <strong>Rofhiwa Netshitangani</strong>, discuss the future of Quality Engineering, the shift from traditional QA, and how Rofane Consulting is driving innovation in the South African tech landscape.</p>
-            <a href="https://youtu.be/02xAJx4Ntnc?si=_J0tQee3wgkUt6Rn" class="glightbox watch-link">Watch Full Interview</a>
+            <p>Watch our CEO, <strong>Rofhiwa Netshitangani</strong>, discuss the future of Quality Engineering and how Rofane Consulting is driving unmatched quality.</p>
+            <div class="team-statement">
+              "Our collaborative team of industry experts are driven to deliver excellent service to our clients. Each member of the team takes personal responsibility and ownership for every assignment they are tasked with. Working as a supportive, motivational collective, the Rofane Consulting team form mutually beneficial relationships with our clients, achieving a level of quality that is unmatched by our competitors."
+            </div>
+            <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox watch-link">Watch Full Interview</a>
           </div>
           <div class="col-lg-6">
             <div class="video-box" data-aos="zoom-in">
-              <img src="https://img.youtube.com/vi/02xAJx4Ntnc/maxresdefault.jpg" alt="Rofhiwa Netshitangani Interview" class="img-fluid">
-              <a href="https://youtu.be/02xAJx4Ntnc?si=_J0tQee3wgkUt6Rn" class="glightbox play-btn-overlay">
-                <i class="bi bi-play-fill"></i>
-              </a>
+              <img src="https://img.youtube.com/vi/02xAJx4Ntnc/maxresdefault.jpg" alt="CEO Interview" class="img-fluid">
+              <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox play-btn-overlay"><i class="bi bi-play-fill"></i></a>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="clients" class="clients section light-background">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Our Clients and Partners</h2>
-        </div>
-        <div class="swiper init-swiper-clients">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 800,
-              "autoplay": { "delay": 2500 },
-              "slidesPerView": "auto",
-              "breakpoints": {
-                "320": { "slidesPerView": 2, "spaceBetween": 40 },
-                "480": { "slidesPerView": 3, "spaceBetween": 60 },
-                "640": { "slidesPerView": 4, "spaceBetween": 80 },
-                "992": { "slidesPerView": 5, "spaceBetween": 100 }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/DiscoveryBank.svg" class="img-fluid" alt="Discovery Bank"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/LibertyBank.svg" class="img-fluid" alt="Liberty Bank"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/TymeBank.svg" class="img-fluid" alt="TymeBank"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/stanlib.svg" class="img-fluid" alt="STANLIB"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/JSE.svg" class="img-fluid" alt="JSE"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/anchor_consulting.svg" class="img-fluid" alt="Anchor Consulting"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/fhc_consulting.svg" class="img-fluid" alt="FHC Consulting"></div>
-            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/TCTA.svg" class="img-fluid" alt="TCTA"></div>
           </div>
         </div>
       </div>
@@ -165,17 +107,25 @@
 
     <section id="about" class="about section">
       <div class="container section-title" data-aos="fade-up">
-        <h2>About Rofane Consulting</h2>
-        <p>Your strategic partner in Quality Engineering, based in Gauteng, South Africa.</p>
+        <h2>About Rofane Consulting: The Leading Quality Engineering Firm</h2>
+        <p>Your strategic partner in Quality Engineering, based in the economic hub of Gauteng, South Africa.</p>
       </div>
       <div class="container">
         <div class="row gy-4 align-items-center">
-          <div class="col-lg-6 content" data-aos="fade-up">
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
             <h3>From Traditional QA to Proactive Quality Engineering (QE)</h3>
-            <p>Rofane Consulting (Pty) Ltd operates as a specialized Business Services firm in <strong>Gauteng, South Africa</strong>. We move beyond defect detection to embedding quality throughout the life cycle.</p>
+            <p>Rofane Consulting (Pty) Ltd operates as a specialized Business Services firm in <strong>Gauteng, South Africa</strong>. We move beyond traditional Quality Assurance (QA) to <strong>Quality Engineering (QE)</strong>, embedding quality into the entire Software Development Life Cycle.</p>
             <div class="row gy-4 mt-3">
-              <div class="col-md-6 icon-box"><i class="bi bi-rocket-takeoff"></i><h4>Mission</h4><p>Providing sustainable and scalable improvements through industry best practices.</p></div>
-              <div class="col-md-6 icon-box"><i class="bi bi-shield-check"></i><h4>Value</h4><p>Guaranteed return on investment through metrics and SLAs.</p></div>
+              <div class="col-md-6 icon-box">
+                <i class="bi bi-rocket-takeoff"></i>
+                <h4>Mission</h4>
+                <p>Providing sustainable and scalable improvements through industry best practices and advanced technology.</p>
+              </div>
+              <div class="col-md-6 icon-box">
+                <i class="bi bi-shield-check"></i>
+                <h4>Value Proposition</h4>
+                <p>Guaranteed return on investment through metrics and SLAs that provide total visibility and transparency.</p>
+              </div>
             </div>
           </div>
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
@@ -187,77 +137,115 @@
       </div>
     </section>
 
-    <section id="testimonials" class="testimonials section light-background">
+    <section id="services-offering" class="services section light-background">
       <div class="container section-title" data-aos="fade-up">
-        <h2>Client Validation</h2>
-        <p>Our success is built on documented evidence of success and validated client satisfaction.</p>
+        <h2>Our Service Offering</h2>
       </div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": { "delay": 5000 },
-              "slidesPerView": "auto",
-              "pagination": { "el": ".swiper-pagination", "type": "bullets", "clickable": true },
-              "breakpoints": { "320": { "slidesPerView": 1, "spaceBetween": 40 }, "1200": { "slidesPerView": 2, "spaceBetween": 20 } }
-            }
-          </script>
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <h3>Saul Goodman</h3>
-                  <h4>CEO & Founder</h4>
-                  <p><i class="bi bi-quote quote-icon-left"></i><span>Rofane reduced our regression cycle from 48 hours to 12 hours, saving developer hours monthly. This is real ROI.</span><i class="bi bi-quote quote-icon-right"></i></p>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
-                  <p><i class="bi bi-quote quote-icon-left"></i><span>Their deep SQL integration caught discrepancies that would have cost us thousands in incorrect processing.</span><i class="bi bi-quote quote-icon-right"></i></p>
-                </div>
-              </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <i class="bi bi-clipboard-check"></i>
+              <h4>Test Advisory Service</h4>
+              <p>We offer QA Test assessments to evaluate the testing maturity of the organisation, assisting in creating and implementing the organisation’s Test Strategy and Processes.</p>
             </div>
           </div>
-          <div class="swiper-pagination"></div>
+          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <i class="bi bi-gear-wide-connected"></i>
+              <h4>Functional Testing</h4>
+              <p>We build end to end test cases that are easy to maintain and are re-usable for test automation with wide range of domain expertise.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <i class="bi bi-speedometer2"></i>
+              <h4>Performance and Automation Testing</h4>
+              <p>We develop Performance and Automation Frameworks, define Performance and Automation strategy and Implementation to ensure the systems readiness for production.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services-core" class="services section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Our Services</h2>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <i class="bi bi-graph-up-arrow"></i>
+              <h4>Business Analysis</h4>
+              <p>Specializing in analysts capable of understanding both business and technology. Project success depends on translating the right requirements.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <i class="bi bi-diagram-3"></i>
+              <h4>Business Process Management</h4>
+              <p>We provide expert Process Designers, Process Engineers, and Process Architects to optimize your business infrastructure.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <i class="bi bi-kanban"></i>
+              <h4>Project Management</h4>
+              <p>Our project managers are PMBoK or Prince2 certified, with extensive banking and project delivery experience.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item position-relative">
+              <i class="bi bi-laptop"></i>
+              <h4>Software Development</h4>
+              <p>Delivering customized, high-quality solutions using cutting-edge technologies to ensure secure, scalable software solutions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recruitment" class="recruitment section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Recruitment Service Offering</h2>
+        <p>At Rofane Consulting, we understand that finding the right talent is crucial to driving business success.</p>
+      </div>
+      <div class="container">
+        <div class="row gy-5 align-items-center">
+          <div class="col-lg-6" data-aos="fade-up">
+            <img src="assets/img/services/recruitment.png" class="img-fluid rounded-4 shadow" alt="Recruitment Services">
+          </div>
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+            <div class="info-block mb-4">
+              <h4><i class="bi bi-person-check-fill me-2"></i> Talent Acquisition</h4>
+              <p>Our experienced recruiters will work closely with you to understand your hiring needs.</p>
+            </div>
+            <div class="info-block mb-4">
+              <h4><i class="bi bi-search me-2"></i> Candidate Sourcing</h4>
+              <p>We utilize a range of sourcing strategies, including social media and professional networks.</p>
+            </div>
+            <div class="info-block mb-4">
+              <h4><i class="bi bi-person-video3 me-2"></i> Interview Support</h4>
+              <p>Our team can assist with interview preparation and conduct skills assessments.</p>
+            </div>
+            <div class="info-block mb-4">
+              <h4><i class="bi bi-shield-check me-2"></i> Candidate Screening</h4>
+              <p>We thoroughly screen candidates to ensure they meet your requirements and fit your company culture.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="contact" class="contact section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Engage a Strategic Partner</h2>
-      </div>
+      <div class="container section-title" data-aos="fade-up"><h2>Contact Us</h2></div>
       <div class="container position-relative" data-aos="fade-up">
         <div class="row gy-4">
           <div class="col-lg-5">
-            <div class="info-item d-flex">
-              <i class="bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Physical Address</h3>
-                <p><a href="https://maps.google.com/?q=483+Jan+Smuts+Ave,+Blairgowrie,+Randburg,+2196" target="_blank" style="color: inherit; text-decoration: none;">483 Jan Smuts Ave, Blairgowrie, Randburg, 2196</a></p>
-                <p>Registration: 2018/058474/07</p>
-              </div>
-            </div>
-            <div class="info-item d-flex">
-              <i class="bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Call Our Team</h3>
-                <p><a href="tel:0115933254" style="color: inherit; text-decoration: none;">011 593 3254</a></p>
-              </div>
-            </div>
-            <div class="info-item d-flex">
-              <i class="bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email Us</h3>
-                <p><a href="mailto:info@rofane.co.za" style="color: inherit; text-decoration: none;">info@rofane.co.za</a></p>
-              </div>
-            </div>
+            <div class="info-item d-flex"><i class="bi bi-geo-alt flex-shrink-0"></i><div><h3>Address</h3><p><a href="https://maps.google.com/?q=483+Jan+Smuts+Ave,+Blairgowrie,+Randburg,+2196" target="_blank" style="color: inherit; text-decoration: none;">483 Jan Smuts Ave, Blairgowrie, Randburg, 2196</a></p></div></div>
+            <div class="info-item d-flex"><i class="bi bi-telephone flex-shrink-0"></i><div><h3>Phone</h3><p><a href="tel:0115933254" style="color: inherit; text-decoration: none;">011 593 3254</a></p></div></div>
+            <div class="info-item d-flex"><i class="bi bi-envelope flex-shrink-0"></i><div><h3>Email</h3><p><a href="mailto:info@rofane.co.za" style="color: inherit; text-decoration: none;">info@rofane.co.za</a></p></div></div>
           </div>
           <div class="col-lg-7">
             <form action="forms/contact.php" method="post" class="php-email-form">
@@ -265,7 +253,7 @@
                 <div class="col-md-6"><input type="text" name="name" class="form-control" placeholder="Your Name" required></div>
                 <div class="col-md-6"><input type="email" class="form-control" name="email" placeholder="Your Email" required></div>
                 <div class="col-md-12"><textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea></div>
-                <div class="col-md-12 text-center"><button type="submit">Send Message</button></div>
+                <div class="col-md-12 text-center"><button type="submit" class="btn btn-primary" style="background:#4682b4; border:none; padding:10px 30px;">Send Message</button></div>
               </div>
             </form>
           </div>
@@ -274,12 +262,7 @@
     </section>
   </main>
 
-  <footer id="footer" class="footer">
-    <div class="container text-center">
-      <p>© <span>Copyright</span> <strong>Rofane Consulting (Pty) Ltd</strong>. All Rights Reserved</p>
-      <div class="credits">Designed by Nexular</div>
-    </div>
-  </footer>
+  <footer id="footer" class="footer"><div class="container text-center"><p>© Copyright <strong>Rofane Consulting (Pty) Ltd</strong>. All Rights Reserved</p></div></footer>
 
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
@@ -288,7 +271,6 @@
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
   <script src="assets/js/main.js"></script>
 </body>
 </html>
