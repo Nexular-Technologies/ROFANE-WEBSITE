@@ -919,7 +919,9 @@ section,
   pointer-events: auto; /* Ensures links remain clickable */
 }
 /* --- Hero Text Animation --- */
-
+.about-img{
+  padding:100px;
+}
 /* Initial state: Hidden and moved down */
 .hero-content-fade {
   opacity: 0;
