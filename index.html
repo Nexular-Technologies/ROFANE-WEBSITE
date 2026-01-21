@@ -14,11 +14,12 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   
   <link href="assets/css/main.css" rel="stylesheet">
 
@@ -66,6 +67,10 @@
       font-size: 35px; transition: 0.3s; z-index: 2;
     }
     .video-box:hover .play-btn-overlay { background: #0056b3; transform: translate(-50%, -50%) scale(1.1); }
+
+    /* Client Carousel Styling */
+    .clients .swiper-slide img { opacity: 0.6; transition: 0.3s; filter: grayscale(100%); width: 140px; }
+    .clients .swiper-slide img:hover { opacity: 1; filter: none; }
   </style>
 </head>
 
@@ -81,6 +86,7 @@
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -127,32 +133,31 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2>Our Clients and Partners</h2>
-          <p>We collaborate with top-tier organizations across diverse industries.</p>
         </div>
-        <div class="row gy-4 justify-content-center align-items-center">
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/DiscoveryBank.svg" class="img-fluid client-img" alt="Discovery Bank Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/LibertyBank.svg" class="img-fluid client-img" alt="Liberty Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/TymeBank.svg" class="img-fluid client-img" alt="TymeBank Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/stanlib.svg" class="img-fluid client-img" alt="STANLIB Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/JSE.svg" class="img-fluid client-img" alt="JSE Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/anchor_consulting.svg" class="img-fluid client-img" alt="ANCHOR CONSULTING Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/fhc_consulting.svg" class="img-fluid client-img" alt="FHC Consulting Logo"></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center">
-            <a href="#"><img src="assets/img/clients/Clients_logos/TCTA.svg" class="img-fluid client-img" alt="TCTA Logo"></a>
+        <div class="swiper init-swiper-clients">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 800,
+              "autoplay": { "delay": 2500 },
+              "slidesPerView": "auto",
+              "breakpoints": {
+                "320": { "slidesPerView": 2, "spaceBetween": 40 },
+                "480": { "slidesPerView": 3, "spaceBetween": 60 },
+                "640": { "slidesPerView": 4, "spaceBetween": 80 },
+                "992": { "slidesPerView": 5, "spaceBetween": 100 }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/DiscoveryBank.svg" class="img-fluid" alt="Discovery Bank"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/LibertyBank.svg" class="img-fluid" alt="Liberty Bank"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/TymeBank.svg" class="img-fluid" alt="TymeBank"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/stanlib.svg" class="img-fluid" alt="STANLIB"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/JSE.svg" class="img-fluid" alt="JSE"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/anchor_consulting.svg" class="img-fluid" alt="Anchor Consulting"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/fhc_consulting.svg" class="img-fluid" alt="FHC Consulting"></div>
+            <div class="swiper-slide text-center"><img src="assets/img/clients/Clients_logos/TCTA.svg" class="img-fluid" alt="TCTA"></div>
           </div>
         </div>
       </div>
@@ -167,7 +172,7 @@
         <div class="row gy-4 align-items-center">
           <div class="col-lg-6 content" data-aos="fade-up">
             <h3>From Traditional QA to Proactive Quality Engineering (QE)</h3>
-            <p>Rofane Consulting (Pty) Ltd operates as a specialized Business Services firm in <strong>Gauteng, South Africa</strong>. We embed quality into the entire Software Development Life Cycle.</p>
+            <p>Rofane Consulting (Pty) Ltd operates as a specialized Business Services firm in <strong>Gauteng, South Africa</strong>. We move beyond defect detection to embedding quality throughout the life cycle.</p>
             <div class="row gy-4 mt-3">
               <div class="col-md-6 icon-box"><i class="bi bi-rocket-takeoff"></i><h4>Mission</h4><p>Providing sustainable and scalable improvements through industry best practices.</p></div>
               <div class="col-md-6 icon-box"><i class="bi bi-shield-check"></i><h4>Value</h4><p>Guaranteed return on investment through metrics and SLAs.</p></div>
@@ -175,17 +180,58 @@
           </div>
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <div class="about-img">
-              <img src="assets/img/services/about_image.png" class="img-fluid rounded-4 shadow" alt="Rofane Consulting Team Working on Quality Engineering">
+              <img src="assets/img/services/about_image.png" class="img-fluid rounded-4 shadow" alt="Rofane Consulting Team">
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <section id="testimonials" class="testimonials section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Client Validation</h2>
+        <p>Our success is built on documented evidence of success and validated client satisfaction.</p>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": { "delay": 5000 },
+              "slidesPerView": "auto",
+              "pagination": { "el": ".swiper-pagination", "type": "bullets", "clickable": true },
+              "breakpoints": { "320": { "slidesPerView": 1, "spaceBetween": 40 }, "1200": { "slidesPerView": 2, "spaceBetween": 20 } }
+            }
+          </script>
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <h3>Saul Goodman</h3>
+                  <h4>CEO & Founder</h4>
+                  <p><i class="bi bi-quote quote-icon-left"></i><span>Rofane reduced our regression cycle from 48 hours to 12 hours, saving developer hours monthly. This is real ROI.</span><i class="bi bi-quote quote-icon-right"></i></p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <h3>Sara Wilsson</h3>
+                  <h4>Designer</h4>
+                  <p><i class="bi bi-quote quote-icon-left"></i><span>Their deep SQL integration caught discrepancies that would have cost us thousands in incorrect processing.</span><i class="bi bi-quote quote-icon-right"></i></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="contact section">
       <div class="container section-title" data-aos="fade-up">
-        <h2>Engage a Strategic Quality Engineering Partner</h2>
-        <p>Contact us for a strategic review of your current QE maturity.</p>
+        <h2>Engage a Strategic Partner</h2>
       </div>
       <div class="container position-relative" data-aos="fade-up">
         <div class="row gy-4">
@@ -201,14 +247,14 @@
             <div class="info-item d-flex">
               <i class="bi bi-telephone flex-shrink-0"></i>
               <div>
-                <h3>Call Our Consulting Team</h3>
+                <h3>Call Our Team</h3>
                 <p><a href="tel:0115933254" style="color: inherit; text-decoration: none;">011 593 3254</a></p>
               </div>
             </div>
             <div class="info-item d-flex">
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
-                <h3>Email Us for a QE Consultation</h3>
+                <h3>Email Us</h3>
                 <p><a href="mailto:info@rofane.co.za" style="color: inherit; text-decoration: none;">info@rofane.co.za</a></p>
               </div>
             </div>
@@ -218,7 +264,6 @@
               <div class="row gy-4">
                 <div class="col-md-6"><input type="text" name="name" class="form-control" placeholder="Your Name" required></div>
                 <div class="col-md-6"><input type="email" class="form-control" name="email" placeholder="Your Email" required></div>
-                <div class="col-md-12"><input type="text" class="form-control" name="subject" placeholder="Subject" required></div>
                 <div class="col-md-12"><textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea></div>
                 <div class="col-md-12 text-center"><button type="submit">Send Message</button></div>
               </div>
@@ -237,13 +282,13 @@
   </footer>
 
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
 
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  
   <script src="assets/js/main.js"></script>
-  <script type="text/javascript">
-    const lightbox = GLightbox({ selector: '.glightbox' });
-  </script>
 </body>
 </html>
