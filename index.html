@@ -1,293 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Rofane Consulting: Quality Engineering, QE Automation & Software Testing</title>
-  <meta name="description" content="Rofane Consulting is the leading Quality Engineering (QE) firm in Gauteng, South Africa.">
+<link href="assets/img/favicons/favicon.svg" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link rel="shortcut icon" href="./assets/img/favicons/favicon-96x96.png" type="image/x-icon">
+<link rel="shortcut icon" href="./assets/img/favicons/favicon.svg" type="image/x-icon">
+<link rel="shortcut icon" href="./assets/img/favicons/favicon.ico" type="image/x-icon">
 
-  <link rel="icon" type="image/png" href="assets/img/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/svg+xml" href="assets/img/favicons/favicon.svg">
-  <link rel="shortcut icon" href="assets/img/favicons/favicon.ico">
-  
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/css/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  
-  <style>
-    .video-spotlight { padding: 80px 0; background: #ffffff; }
-    .heading-accent { width: 45px; height: 3px; background-color: #4682b4; margin-bottom: 15px; display: block; }
-    .video-spotlight h2 { font-size: 42px; font-weight: 700; color: #212529; margin-bottom: 30px; }
-    .video-spotlight p { color: #555; line-height: 1.6; font-size: 17px; max-width: 500px; }
-    .watch-link { display: inline-block; margin-top: 30px; color: #4682b4; text-decoration: none; font-weight: 500; transition: 0.3s; }
-    .watch-link:hover { color: #0056b3; text-decoration: underline; }
-    .video-box { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-    .video-box img { width: 100%; transition: transform 0.5s ease; }
-    .play-btn-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85px; height: 85px; background: #007bff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 35px; z-index: 2; }
-    
-    /* Grid Client Layout */
-    .client-logo img { opacity: 0.6; transition: 0.3s; filter: grayscale(100%); width: 100%; max-width: 140px; }
-    .client-logo img:hover { opacity: 1; filter: none; }
-    
-    .service-item h4 { color: #4682b4; font-weight: 700; text-transform: uppercase; font-size: 16px; margin-bottom: 15px; transition: 0.3s; }
-    .service-item:hover h4 { color: #ffffff !important; }
-    .team-statement { font-style: italic; color: #555; border-left: 4px solid #4682b4; padding-left: 20px; margin-top: 30px; line-height: 1.6; }
-    
-    /* Recruitment Section Scaling */
-    .recruitment .info-block i { font-size: 1.5rem; color: #4682b4; }
-    .recruitment .info-block h4 { color: #4682b4; font-weight: 700; text-transform: uppercase; font-size: 1.2rem; margin-bottom: 12px; }
-    .recruitment .info-block p { font-size: 1.15rem; line-height: 1.7; }
-  </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="./assets/css/main.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 </head>
+<body>
 
-<body class="index-page">
-
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/RofaneLogo.svg" alt="Rofane Consulting Logo">
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services-offering">Service Offering</a></li>
-          <li><a href="#services-core">Our Services</a></li>
-          <li><a href="#recruitment">Recruitment</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <a class="btn-getstarted" href="#contact">Get Started</a>
+    <div class="bg-wrapper">
+        <div id="vanta-canvas"></div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
     </div>
-  </header>
 
-  <main class="main">
-    <section id="hero" class="hero section">
-      <div id="vanta-canvas"></div>
-      <div class="container">
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/RofaneLogo.svg" alt="Rofane Logo" style="max-height: 50px;">
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#offerings">Offerings</a></li>
+                    <li><a href="#academy">Academy</a></li>
+                    <li><a href="#recruitment">Recruitment</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            <a class="btn-getstarted d-none d-md-block" href="#contact">Get Started</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <section id="hero" class="hero section d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-10">
+                        <div class="glass-card p-5" data-aos="zoom-out">
+                            <h1 class="text-gradient mb-4">Where Expertise Meets Innovation</h1> [cite: 103]
+                            <p class="lead">Founded in 2018, Rofane Consulting has evolved into an innovative solutions provider that transforms organization technology infrastructure. [cite: 3]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="leadership" class="section py-5">
+            <div class="container" data-aos="fade-up">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-6">
+                        <div class="glass-card p-5">
+                            <h2 class="fw-bold mb-4">Insights from our <span class="text-gradient">Leadership</span></h2>
+                            <p class="mb-4">We actively shape how businesses leverage technology to achieve their goals. [cite: 10]</p>
+                            <div class="team-statement border-start border-primary border-4 ps-4 mb-4">
+                                <p class="fst-italic opacity-75">"When you partner with Rofane Consulting, you're not just hiring consultants; you're gaining dedicated partners who are invested in your success." [cite: 10]</p>
+                            </div>
+                            <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox btn-getstarted"><i class="bi bi-play-circle-fill me-2"></i> Watch Interview</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="video-container position-relative">
+                            <div class="glass-card p-2 overflow-hidden">
+                                <img src="https://img.youtube.com/vi/02xAJx4Ntnc/maxresdefault.jpg" class="img-fluid rounded-4" alt="CEO Video">
+                                <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox play-overlay position-absolute top-50 start-50 translate-middle">
+                                    <div class="play-button"><i class="bi bi-play-fill"></i></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clients" class="section py-5">
+            <div class="container text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Our Clients and <span class="text-gradient">Partners</span></h2>
+                <p>Proprietary solutions successfully deployed across multiple client environments. [cite: 9]</p>
+            </div>
+            <div class="container" data-aos="fade-up">
+                <div class="row gy-4 justify-content-center align-items-center opacity-75">
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/DiscoveryBank.svg" class="img-fluid" alt="Discovery"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/LibertyBank.svg" class="img-fluid" alt="Liberty"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/tymeBank.svg" class="img-fluid" alt="TymeBank"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/stanlib.svg" class="img-fluid" alt="STANLIB"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/anchor_consulting.svg" class="img-fluid" alt="Discovery"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/fhc_consulting.svg" class="img-fluid" alt="Liberty"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/jse.svg" class="img-fluid" alt="TymeBank"></div></div>
+                    <div class="col-lg-2 col-md-4 col-6"><div class="glass-card p-3"><img src="./assets/img/clients/Clients_logos/tcta.svg" class="img-fluid" alt="STANLIB"></div></div>                
+                  </div>
+            </div>
+        </section>
+
+        <section id="offerings" class="section py-5">
+            <div class="container section-title text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Our Service <span>Offerings</span></h2> [cite: 20]
+            </div>
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                        <div class="glass-card p-4 h-100">
+                            <i class="bi bi-clipboard-check fs-1 text-primary mb-3"></i>
+                            <h4>Test Advisory</h4> [cite: 21]
+                            <p>Assessing testing maturity and implementing strategies aligned with business objectives. [cite: 22, 23]</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="glass-card p-4 featured-glass h-100">
+                            <i class="bi bi-cpu fs-1 text-primary mb-3"></i>
+                            <h4>Automation Testing</h4> [cite: 27]
+                            <p>Custom frameworks tailored to ensure systems are production-ready, scalable, and reliable. [cite: 28, 29]</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="glass-card p-4 h-100">
+                            <i class="bi bi-shield-lock fs-1 text-primary mb-3"></i>
+                            <h4>Functional Testing</h4> [cite: 24]
+                            <p>Building end-to-end test cases spanning multiple domains to ensure flawless application functionality. [cite: 25, 26]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="values" class="values section py-5">
+  <div class="container section-title text-center mb-5" data-aos="fade-up">
+    <h2 class="fw-bold">Our Value <span class="text-gradient">Proposition</span></h2>
+  </div>
+
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="glass-card p-5 h-100">
+          <h3 class="fw-bold mb-4 text-primary"><i class="bi bi-shield-lock me-2"></i>Reduce Risk Through:</h3> [cite: 12]
+          
+          <div class="value-item mb-4">
+            <h5 class="fw-bold">Strategic Testing Excellence</h5> [cite: 13]
+            <p class="small">Combining onsite presence with technology assets to minimize project risk through skilled resources with deep domain knowledge. [cite: 13, 14]</p>
+          </div>
+
+          <div class="value-item">
+            <h5 class="fw-bold">Intelligent Test Design</h5> [cite: 15]
+            <p class="small">Leveraging advanced AI tools and robust design methodologies to achieve maximum coverage and accelerate time-to-market. [cite: 15]</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="glass-card p-5 h-100 featured-glass">
+          <h3 class="fw-bold mb-4 text-primary"><i class="bi bi-graph-up-arrow me-2"></i>Operational Excellence Through:</h3> [cite: 16]
+          
+          <div class="value-item mb-4">
+            <h5 class="fw-bold">Sustainable Value Creation</h5> [cite: 17]
+            <p class="small">Combining AI with proven practices to create intelligent, reusable assets that deliver continuous benefit long after project completion. [cite: 17]</p>
+          </div>
+
+          <div class="value-item mb-4">
+            <h5 class="fw-bold">Empowering Automation</h5> 
+            <p class="small">Our proprietary test automation solution empowers non-technical users to manage automation independently, increasing agility. </p>
+          </div>
+
+          <div class="value-item">
+            <h5 class="fw-bold">Flexible Engagement Models</h5> [cite: 19]
+            <p class="small">Staffing based on load variations ensures you have the resources you need exactly when you need them. [cite: 19]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    <section id="academy" class="section py-5">
+    <div class="container mb-5">
+        <div class="glass-card academy-banner p-5 text-white" data-aos="flip-up">
+            <div class="row align-items-center gy-4 text-center text-md-start">
+                <div class="col-md-8">
+                    <h2 class="fw-bold">Building Testing Talent from the Ground Up</h2> [cite: 69]
+                    <p class="mb-0">At Rofane Consulting, we don't just recruit talent—we create it. Our Academy is dedicated to developing skilled software testers and engineers ready for modern demands. [cite: 70, 71]</p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <a href="#curriculum" class="btn btn-light btn-lg rounded-pill fw-bold px-4">View Curriculum</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="curriculum">
         <div class="row gy-4">
-          <div class="col-lg-8 col-xl-7 glass-card hero-content-fade">
-            <h1>Quality Engineering and Automation Services in Gauteng, South Africa</h1>
-            <p>Transforming software quality from a defensive check to a proactive engineering discipline for measurable business outcomes.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="video-spotlight" class="video-spotlight">
-      <div class="container" data-aos="fade-up">
-        <div class="row align-items-center">
-          <div class="col-lg-6 mb-5 mb-lg-0">
-            <span class="heading-accent"></span>
-            <h2>Insights from our Leadership</h2>
-            <p>Watch our CEO, <strong>Rofhiwa Netshitangani</strong>, discuss the future of Quality Engineering and how Rofane Consulting is driving unmatched quality.</p>
-            <div class="team-statement">
-              "Our collaborative team of industry experts are driven to deliver excellent service to our clients. Each member of the team takes personal responsibility and ownership for every assignment they are tasked with. Working as a supportive, motivational collective, the Rofane Consulting team form mutually beneficial relationships with our clients, achieving a level of quality that is unmatched by our competitors."
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="glass-card p-4 h-100">
+                    <h4 class="fw-bold mb-4 text-primary">Comprehensive Practical Training</h4> [cite: 72]
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled custom-list">
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Testing Fundamentals [cite: 73]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Automation Frameworks [cite: 74]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Tool & Case Design [cite: 75]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Manual Best Practices [cite: 76]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Programming for QA [cite: 77]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>API & Integration [cite: 78]</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled custom-list">
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>CI/CD Pipelines [cite: 79]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Defect Tracking [cite: 80]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Agile/Waterfall [cite: 81]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>QA Standards [cite: 82]</li>
+                                <li><i class="bi bi-chevron-right me-2 text-primary"></i>Industry Tools [cite: 83]</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox watch-link">Watch Full Interview</a>
-          </div>
-          <div class="col-lg-6">
-            <div class="video-box" data-aos="zoom-in">
-              <img src="https://img.youtube.com/vi/02xAJx4Ntnc/maxresdefault.jpg" alt="CEO Interview" class="img-fluid">
-              <a href="https://youtu.be/02xAJx4Ntnc" class="glightbox play-btn-overlay"><i class="bi bi-play-fill"></i></a>
+
+            <div class="col-lg-5" data-aos="fade-left">
+                <div class="row gy-3">
+                    <div class="col-12">
+                        <div class="glass-card p-3 d-flex align-items-center">
+                            <i class="bi bi-laptop fs-3 text-primary me-3"></i>
+                            <div><h6 class="fw-bold mb-0">Practical, Hands-On Experience</h6> [cite: 84] <p class="small mb-0 text-muted">Working on real testing projects. [cite: 84]</p></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="glass-card p-3 d-flex align-items-center">
+                            <i class="bi bi-person-workspace fs-3 text-primary me-3"></i>
+                            <div><h6 class="fw-bold mb-0">Industry-Expert Instructors</h6> [cite: 85] <p class="small mb-0 text-muted">Current field best practices. [cite: 85]</p></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="glass-card p-3 d-flex align-items-center">
+                            <i class="bi bi-award fs-3 text-primary me-3"></i>
+                            <div><h6 class="fw-bold mb-0">Job-Ready Skills</h6> [cite: 86] <p class="small mb-0 text-muted">Contributing from day one. [cite: 86]</p></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="glass-card p-3 d-flex align-items-center">
+                            <i class="bi bi-headset fs-3 text-primary me-3"></i>
+                            <div><h6 class="fw-bold mb-0">Comprehensive Support</h6> [cite: 87] <p class="small mb-0 text-muted">Mentorship & placement assistance. [cite: 87]</p></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <section id="clients" class="clients section light-background">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Our Clients and Partners</h2>
-        </div>
-        <div class="row gy-4 justify-content-center align-items-center">
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/DiscoveryBank.svg" class="img-fluid" alt="Discovery Bank"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/LibertyBank.svg" class="img-fluid" alt="Liberty Bank"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/tymeBank.svg" class="img-fluid" alt="TymeBank"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/stanlib.svg" class="img-fluid" alt="STANLIB"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/jse.svg" class="img-fluid" alt="JSE"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/tcta.svg" class="img-fluid" alt="TCTA"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/fhc_consulting.svg" class="img-fluid" alt="FHC Consulting"></div>
-          <div class="col-lg-3 col-md-4 col-6 client-logo text-center"><img src="./assets/img/clients/Clients_logos/anchor_consulting.svg" class="img-fluid" alt="anchor_consulting"></div>
-
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="about section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About Rofane Consulting: The Leading Quality Engineering Firm</h2>
-        <p>Your strategic partner in Quality Engineering, based in the economic hub of Gauteng, South Africa.</p>
-      </div>
-      <div class="container">
-        <div class="row gy-4 align-items-center">
-          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
-            <h3>From Traditional QA to Proactive Quality Engineering (QE)</h3>
-            <p>Rofane Consulting (Pty) Ltd operates as a specialized Business Services firm in <strong>Gauteng, South Africa</strong>. We move beyond traditional Quality Assurance (QA) to <strong>Quality Engineering (QE)</strong>, embedding quality into the entire Software Development Life Cycle.</p>
-            <div class="row gy-4 mt-3">
-              <div class="col-md-6 icon-box">
-                <i class="bi bi-rocket-takeoff"></i>
-                <h4>Mission</h4>
-                <p>Providing sustainable and scalable improvements through industry best practices and advanced technology.</p>
-              </div>
-              <div class="col-md-6 icon-box">
-                <i class="bi bi-shield-check"></i>
-                <h4>Value Proposition</h4>
-                <p>Guaranteed return on investment through metrics and SLAs that provide total visibility and transparency.</p>
-              </div>
+<section id="recruitment" class="section py-5">
+    <div class="container section-title text-center mb-5" data-aos="fade-up">
+        [cite_start]<h2 class="fw-bold">Strategic IT <span class="text-gradient">Talent Acquisition</span></h2> [cite: 41]
+        [cite_start]<p class="mt-3">Beyond traditional staffing: we source technical expertise, cultural fit, and domain knowledge for successful outcomes. [cite: 42, 43][cite_start]</p> [cite: 42, 43]
+    </div>
+    
+    <div class="container">
+        <div class="row gy-4 mb-5">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                <div class="glass-card p-4 h-100">
+                    [cite_start]<h4><i class="bi bi-code-square me-2 text-primary"></i>Technical Understanding</h4> [cite: 46]
+                    [cite_start]<p class="small">Our consultants possess practical experience in IT delivery, allowing us to assess technologies and tools beyond resume evaluations. [cite: 46, 47][cite_start]</p> [cite: 46, 47]
+                </div>
             </div>
-          </div>
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="about-img">
-              <img src="assets/img/services/about_image.png" class="img-fluid rounded-4 shadow" alt="Rofane Consulting Team">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="services-offering" class="services section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Our Service Offering</h2>
-      </div>
-      <div class="container">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card p-4 h-100 featured-glass">
+                    [cite_start]<h4><i class="bi bi-bank me-2 text-primary"></i>Domain Expertise</h4> [cite: 48]
+                    [cite_start]<p class="small">Extensive experience in banking and financial services ensures we match candidates who accelerate productivity. [cite: 48][cite_start]</p> [cite: 48]
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card p-4 h-100">
+                    [cite_start]<h4><i class="bi bi-patch-check me-2 text-primary"></i>Quality Guarantee</h4> [cite: 62]
+                    [cite_start]<p class="small">We stand behind our placements with replacement guarantees, probation support, and performance check-ins. [cite: 62, 63, 64, 65][cite_start]</p> [cite: 62, 63, 64, 65]
+                </div>
+            </div>
+        </div>
+
         <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <i class="bi bi-clipboard-check"></i>
-              <h4>Test Advisory Service</h4>
-              <p>We offer QA Test assessments to evaluate the testing maturity of the organisation, assisting in creating and implementing the organisation’s Test Strategy and Processes.</p>
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="glass-card p-4 h-100">
+                    [cite_start]<h4 class="mb-4"><i class="bi bi-shield-check me-2 text-primary"></i>Rigorous Vetting Process</h4> [cite: 49]
+                    <ul class="list-unstyled custom-list">
+                        [cite_start]<li><i class="bi bi-check-circle-fill me-2 text-primary"></i>Initial skills and experience assessment [cite: 50][cite_start]</li> [cite: 50]
+                        [cite_start]<li><i class="bi bi-check-circle-fill me-2 text-primary"></i>Expert interviews [cite: 51][cite_start]</li> [cite: 51]
+                        [cite_start]<li><i class="bi bi-check-circle-fill me-2 text-primary"></i>Tool and technology proficiency verification [cite: 52][cite_start]</li> [cite: 52]
+                        [cite_start]<li><i class="bi bi-check-circle-fill me-2 text-primary"></i>Domain knowledge assessment [cite: 53][cite_start]</li> [cite: 53]
+                        [cite_start]<li><i class="bi bi-check-circle-fill me-2 text-primary"></i>Reference and credential verification [cite: 54][cite_start]</li> [cite: 54]
+                        [cite_start]<li><i class="bi bi-check-circle-fill me-2 text-primary"></i>Cultural fit evaluation [cite: 55][cite_start]</li> [cite: 55]
+                    </ul>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <i class="bi bi-gear-wide-connected"></i>
-              <h4>Functional Testing</h4>
-              <p>We build end to end test cases that are easy to maintain and are re-usable for test automation with wide range of domain expertise.</p>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <i class="bi bi-speedometer2"></i>
-              <h4>Performance and Automation Testing</h4>
-              <p>We develop Performance and Automation Frameworks, define Performance and Automation strategy and Implementation to ensure the systems readiness for production.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="services-core" class="services section">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Our Services</h2>
-      </div>
-      <div class="container">
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="glass-card p-4 h-100">
+                    [cite_start]<h4 class="mb-4"><i class="bi bi-globe me-2 text-primary"></i>Extensive Network</h4> [cite: 56]
+                    <ul class="list-unstyled custom-list">
+                        [cite_start]<li><i class="bi bi-people-fill me-2 text-primary"></i>Active job seekers & industry referrals [cite: 57, 61][cite_start]</li> [cite: 57, 61]
+                        [cite_start]<li><i class="bi bi-people-fill me-2 text-primary"></i>Passive candidates open to opportunities [cite: 58][cite_start]</li> [cite: 58]
+                        [cite_start]<li><i class="bi bi-people-fill me-2 text-primary"></i>Alumni from previous placements [cite: 59][cite_start]</li> [cite: 59]
+                        [cite_start]<li><i class="bi bi-people-fill me-2 text-primary"></i>Graduates from our Training Academy [cite: 60][cite_start]</li> [cite: 60]
+                        [cite_start]<li><i class="bi bi-people-fill me-2 text-primary"></i>Long-term relationship building [cite: 67][cite_start]</li> [cite: 67]
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="contact" class="section py-5">
+    <div class="container section-title text-center mb-5" data-aos="fade-up">
+        <h2 class="fw-bold">Connect <span class="text-gradient">With Us</span></h2>
+    </div>
+    <div class="container">
         <div class="row gy-4">
-          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <i class="bi bi-graph-up-arrow"></i>
-              <h4>Business Analysis</h4>
-              <p>Specializing in analysts capable of understanding both business and technology. Project success depends on translating the right requirements.</p>
+            <div class="col-lg-5">
+                <div class="glass-card p-4 h-100 d-flex flex-column gap-3">
+                    <div class="info-item d-flex align-items-center">
+                        <i class="bi bi-geo-alt fs-4 me-3 text-primary"></i>
+                        <div><h6 class="fw-bold mb-0">Location</h6><p class="small mb-0">483 Jan Smuts Ave, Randburg, 2196</p></div>
+                    </div>
+                    <div class="info-item d-flex align-items-center">
+                        <i class="bi bi-telephone fs-4 me-3 text-primary"></i>
+                        <div><h6 class="fw-bold mb-0">Phone</h6><p class="small mb-0">011 593 3254</p></div>
+                    </div>
+                    <div class="info-item d-flex align-items-center">
+                        <i class="bi bi-envelope fs-4 me-3 text-primary"></i>
+                        <div><h6 class="fw-bold mb-0">Email</h6><p class="small mb-0">info@rofane.co.za</p></div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <i class="bi bi-diagram-3"></i>
-              <h4>Business Process Management</h4>
-              <p>We provide expert Process Designers, Process Engineers, and Process Architects to optimize your business infrastructure.</p>
+            <div class="col-lg-7">
+                <form class="glass-card p-4 h-100">
+                    <div class="row gy-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control glass-input" placeholder="Your Name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control glass-input" placeholder="Your Email" required>
+                        </div>
+                        <div class="col-md-12">
+                            <select class="form-select glass-input" aria-label="Select Service">
+                                <option selected disabled>Select a Service</option>
+                                <optgroup label="Quality Engineering">
+                                    <option value="test-advisory">Test Advisory Service</option>
+                                    <option value="functional-testing">Functional Testing</option>
+                                    <option value="automation">Performance and Automation Testing</option>
+                                </optgroup>
+                                <optgroup label="Professional Services">
+                                    <option value="business-analysis">Business Analysis (AI-Powered)</option>
+                                    <option value="bpm">Business Process Management (BPM)</option>
+                                    <option value="project-management">Project Management</option>
+                                    <option value="development">Software Development</option>
+                                </optgroup>
+                                <optgroup label="Talent & Training">
+                                    <option value="recruitment">IT Talent Acquisition</option>
+                                    <option value="academy">Training Academy Inquiry</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea class="form-control glass-input" rows="4" placeholder="How can we help?"></textarea>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn-getstarted border-0 px-5">Send Message</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <i class="bi bi-kanban"></i>
-              <h4>Project Management</h4>
-              <p>Our project managers are PMBoK or Prince2 certified, with extensive banking and project delivery experience core to everything we do.</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <i class="bi bi-laptop"></i>
-              <h4>Software Development</h4>
-              <p>Delivering customized, high-quality solutions using cutting-edge technologies to ensure secure, scalable software solutions.</p>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
+    </main>
 
-    <section id="recruitment" class="recruitment section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Recruitment Service Offering</h2>
-        <p>At Rofane Consulting, we understand that finding the right talent is crucial to driving business success. Our recruitment services are designed to help organizations like yours identify, attract, and hire top professionals who can make a meaningful impact.</p>
-      </div>
-      <div class="container">
-        <div class="row gy-5 align-items-center">
-          <div class="col-lg-6" data-aos="fade-up" style="padding: 70px;">
-            <img src="assets/img/services/recruitment.png" class="img-fluid rounded-4 shadow" alt="Recruitment Services">
-          </div>
-          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
-            <div class="info-block mb-4">
-              <h4><i class="bi bi-person-check-fill me-2"></i> Talent Acquisition</h4>
-              <p>Our experienced recruiters will work closely with you to understand your hiring needs and identify the best candidates for your organization.</p>
-            </div>
-            <div class="info-block mb-4">
-              <h4><i class="bi bi-search me-2"></i> Candidate Sourcing</h4>
-              <p>We utilize a range of sourcing strategies, including social media, job boards, and professional networks, to find the most qualified candidates.</p>
-            </div>
-            <div class="info-block mb-4">
-              <h4><i class="bi bi-person-video3 me-2"></i> Interview Support</h4>
-              <p>Our team can assist with interview preparation, conduct skills assessments, and provide feedback to help you make informed hiring decisions.</p>
-            </div>
-            <div class="info-block mb-4">
-              <h4><i class="bi bi-shield-check me-2"></i> Candidate Screening</h4>
-              <p>We thoroughly screen candidates to ensure they meet your requirements and fit your company culture.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <footer class="footer py-4 text-center">
+        <div class="container"><p class="mb-0 text-muted">© Copyright <strong>Rofane Consulting (Pty) Ltd</strong>. All Rights Reserved</p></div>
+    </footer>
 
-    <section id="contact" class="contact section">
-      <div class="container section-title" data-aos="fade-up"><h2>Contact Us</h2></div>
-      <div class="container position-relative" data-aos="fade-up">
-        <div class="row gy-4">
-          <div class="col-lg-5">
-            <div class="info-item d-flex"><i class="bi bi-geo-alt flex-shrink-0"></i><div><h3>Address</h3><p><a href="https://maps.google.com/?q=483+Jan+Smuts+Ave,+Blairgowrie,+Randburg,+2196" target="_blank" style="color: inherit; text-decoration: none;">483 Jan Smuts Ave, Blairgowrie, Randburg, 2196</a></p></div></div>
-            <div class="info-item d-flex"><i class="bi bi-telephone flex-shrink-0"></i><div><h3>Phone</h3><p><a href="tel:0115933254" style="color: inherit; text-decoration: none;">011 593 3254</a></p></div></div>
-            <div class="info-item d-flex"><i class="bi bi-envelope flex-shrink-0"></i><div><h3>Email</h3><p><a href="mailto:info@rofane.co.za" style="color: inherit; text-decoration: none;">info@rofane.co.za</a></p></div></div>
-          </div>
-          <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form">
-              <div class="row gy-4">
-                <div class="col-md-6"><input type="text" name="name" class="form-control" placeholder="Your Name" required></div>
-                <div class="col-md-6"><input type="email" class="form-control" name="email" placeholder="Your Email" required></div>
-                <div class="col-md-12"><textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea></div>
-                <div class="col-md-12 text-center"><button type="submit" class="btn btn-primary" style="background:#4682b4; border:none; padding:10px 30px;">Send Message</button></div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer id="footer" class="footer"><div class="container text-center"><p>© Copyright <strong>Rofane Consulting (Pty) Ltd</strong>. All Rights Reserved</p></div></footer>
-
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <div id="preloader"></div>
-
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="./assets/js/main.js"></script>
 </body>
 </html>
