@@ -2,14 +2,15 @@
   --primary-blue: #00D2FF;
   --deep-navy: #002B5B; 
   --accent-cyan: #00A8CC;
-  --glass-bg: rgba(0, 0, 0, 0.5);          /* Darkened for black theme */
-  --glass-border: rgba(255, 255, 255, 0.12); /* Subtler light border */
+  --glass-bg: rgba(0, 0, 0, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.12);
   --default-font: "Plus Jakarta Sans", sans-serif;
 }
 
+/* Base Styles */
 body {
-  background-color: #050a10; /* Deep black-blue base */
-  color: #f0f0f0;            /* Off-white for readability */
+  background-color: #050a10;
+  color: #ffffff; 
   font-family: var(--default-font);
   margin: 0;
   overflow-x: hidden;
@@ -17,14 +18,14 @@ body {
 
 /* Background Layer */
 .bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-#vanta-canvas { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
+#vanta-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .blob { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.15; }
 .blob-1 { width: 600px; height: 600px; background: var(--primary-blue); top: -10%; left: -5%; }
 .blob-2 { width: 500px; height: 500px; background: var(--accent-cyan); bottom: 5%; right: -5%; }
 
-/* Navigation Fix */
+/* Navigation & Header */
 .header {
-  background: rgba(0, 0, 0, 0.2); /* Darker header background */
+  background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
   border-bottom: 1px solid var(--glass-border);
   padding: 12px 0;
@@ -40,118 +41,110 @@ body {
   align-items: center;
 }
 
-/* Changed color from navy to white/blue for dark background */
 .navmenu a { color: #ffffff; font-weight: 600; text-decoration: none; transition: 0.3s; opacity: 0.85; }
 .navmenu a:hover, .navmenu .active { color: var(--primary-blue); opacity: 1; }
 
 /* Glass Components */
 .glass-card {
-  background: var(--glass-bg);
+  background: var(--glass-bg) !important;
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border: 1.5px solid var(--glass-border);
   border-radius: 30px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.text-gradient {
-  background: linear-gradient(90deg, #ffffff, var(--primary-blue)); /* Gradient starts with white now */
+.glass-card:hover {
+  transform: translateY(-4px) !important; /* Unified subtle lift */
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Typography & Gradients */
+h1, h2, h3, h4, h5, h6, .text-gradient {
+  background: linear-gradient(45deg, var(--primary-blue), #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  display: inline-block;
 }
 
-.btn-getstarted {
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  color: #050a10; /* Dark text for high contrast on the bright button */
-  padding: 10px 30px; border-radius: 50px; text-decoration: none; font-weight: 700;
+/* Force All Body Text to White */
+.main p, .main li, .main div:not(.text-gradient), .small, .lead, .footer p {
+  color: #ffffff !important;
+  line-height: 1.6;
 }
 
-/* Video Pulse */
+/* Icons using your Accent Cyan */
+.main i:not(.bi-list):not(.bi-x) {
+  color: var(--accent-cyan) !important;
+}
+
+/* Forms & Inputs */
+.glass-input { 
+  background: rgba(0, 0, 0, 0.3) !important; 
+  border: 1px solid var(--glass-border) !important; 
+  border-radius: 12px !important; 
+  color: white !important;
+  transition: 0.3s;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1;
+}
+
+.glass-input:focus {
+  border-color: var(--primary-blue) !important;
+  box-shadow: 0 0 0 0.25rem rgba(0, 210, 255, 0.25);
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  outline: none;
+}
+
+.glass-input option { background-color: #050a10; color: white; }
+
+/* Buttons - High Contrast White Style */
+.btn-getstarted, .btn-learn-more {
+  background-color: #ffffff !important;
+  color: var(--deep-navy) !important;
+  padding: 12px 30px; 
+  border-radius: 50px; 
+  text-decoration: none; 
+  font-weight: 700;
+  border: 2px solid #ffffff !important;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-getstarted:hover, .btn-learn-more:hover {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border-color: var(--primary-blue) !important;
+  backdrop-filter: blur(5px);
+}
+
+/* Animations & Specialized Items */
 .play-button {
-    width: 70px; height: 70px;
-    background: var(--primary-blue); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 2rem;
-    animation: pulse-blue 2s infinite;
+  width: 70px; height: 70px;
+  background: var(--primary-blue); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 2rem;
+  animation: pulse-blue 2s infinite;
 }
 
 @keyframes pulse-blue {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
 }
 
 .academy-banner { background: linear-gradient(135deg, var(--deep-navy), var(--accent-cyan)) !important; }
 .featured-glass { border: 2.5px solid var(--primary-blue) !important; background: rgba(0, 210, 255, 0.1) !important; }
-.glass-input { 
-    background: rgba(255, 255, 255, 0.05) !important; 
-    border: 1px solid var(--glass-border) !important; 
-    border-radius: 12px !important; 
-    color: white !important; 
-}
 
-/* Responsiveness */
+/* Responsive */
 @media (max-width: 991px) {
-    .navmenu ul { display: none; }
-}
-
-/* VALUE PROPOSITION ENHANCEMENTS */
-.values .value-item h5 {
-  font-size: 1.1rem;
-  color: var(--primary-blue); /* Changed from navy to blue */
-  margin-bottom: 8px;
-  position: relative;
-  padding-left: 15px;
-}
-
-.values .value-item h5::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  background: var(--primary-blue);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--primary-blue);
-}
-
-.values .value-item p {
-  color: #bbbbbb; /* Lighter grey for dark mode */
-  line-height: 1.6;
-}
-
-.values .glass-card:hover {
-  transform: scale(1.02);
-  background: rgba(255, 255, 255, 0.05); /* Very subtle highlight on hover */
-}
-
-.custom-list li {
-    padding: 8px 0;
-    display: flex;
-    align-items: center;
-    font-size: 0.95rem;
-    color: #cccccc; /* Lighter text */
-}
-/* Makes all glass-input placeholders white with slight transparency */
-.glass-input::placeholder {
-    color: rgb(255, 255, 255) !important;
-    opacity: 1; /* Required for Firefox */
-}
-
-/* For the Select dropdown specifically (the first disabled option) */
-.glass-input option:disabled {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Ensures the text you actually type is also white */
-.glass-input {
-    color: white !important;
-}
-
-/* Fix for the dropdown options background so you can read them */
-.glass-input option {
-    background-color: #050a10; /* Matches your body background */
-    color: white;
+  .navmenu ul { display: none; }
 }
