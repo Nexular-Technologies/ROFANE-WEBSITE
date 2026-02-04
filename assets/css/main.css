@@ -1,15 +1,15 @@
 :root {
   --primary-blue: #00D2FF;
-  --deep-navy: #002B5B;
+  --deep-navy: #002B5B; 
   --accent-cyan: #00A8CC;
-  --glass-bg: rgba(255, 255, 255, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(0, 0, 0, 0.5);          /* Darkened for black theme */
+  --glass-border: rgba(255, 255, 255, 0.12); /* Subtler light border */
   --default-font: "Plus Jakarta Sans", sans-serif;
 }
 
 body {
-  background-color: #fdfdfd;
-  color: #444;
+  background-color: #050a10; /* Deep black-blue base */
+  color: #f0f0f0;            /* Off-white for readability */
   font-family: var(--default-font);
   margin: 0;
   overflow-x: hidden;
@@ -18,20 +18,19 @@ body {
 /* Background Layer */
 .bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 #vanta-canvas { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
-.blob { position: absolute; filter: blur(100px); border-radius: 50%; opacity: 0.2; }
+.blob { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.15; }
 .blob-1 { width: 600px; height: 600px; background: var(--primary-blue); top: -10%; left: -5%; }
 .blob-2 { width: 500px; height: 500px; background: var(--accent-cyan); bottom: 5%; right: -5%; }
 
 /* Navigation Fix */
 .header {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2); /* Darker header background */
   backdrop-filter: blur(15px);
   border-bottom: 1px solid var(--glass-border);
   padding: 12px 0;
   z-index: 1000;
 }
 
-/* Forces the vertical list into a horizontal row */
 .navmenu ul {
   display: flex; 
   list-style: none;
@@ -41,8 +40,9 @@ body {
   align-items: center;
 }
 
-.navmenu a { color: var(--deep-navy); font-weight: 600; text-decoration: none; transition: 0.3s; }
-.navmenu a:hover, .navmenu .active { color: var(--primary-blue); }
+/* Changed color from navy to white/blue for dark background */
+.navmenu a { color: #ffffff; font-weight: 600; text-decoration: none; transition: 0.3s; opacity: 0.85; }
+.navmenu a:hover, .navmenu .active { color: var(--primary-blue); opacity: 1; }
 
 /* Glass Components */
 .glass-card {
@@ -51,18 +51,19 @@ body {
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border: 1.5px solid var(--glass-border);
   border-radius: 30px;
-  box-shadow: 0 10px 40px rgba(0, 43, 91, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, var(--deep-navy), var(--primary-blue));
+  background: linear-gradient(90deg, #ffffff, var(--primary-blue)); /* Gradient starts with white now */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .btn-getstarted {
-  background: linear-gradient(135deg, var(--deep-navy), var(--accent-cyan));
-  color: white; padding: 10px 30px; border-radius: 50px; text-decoration: none; font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+  color: #050a10; /* Dark text for high contrast on the bright button */
+  padding: 10px 30px; border-radius: 50px; text-decoration: none; font-weight: 700;
 }
 
 /* Video Pulse */
@@ -81,23 +82,28 @@ body {
 }
 
 .academy-banner { background: linear-gradient(135deg, var(--deep-navy), var(--accent-cyan)) !important; }
-.featured-glass { border: 2.5px solid var(--primary-blue); background: rgba(255, 255, 255, 0.6); }
-.glass-input { background: rgba(255, 255, 255, 0.3) !important; border: 1px solid var(--glass-border) !important; border-radius: 12px !important; }
+.featured-glass { border: 2.5px solid var(--primary-blue) !important; background: rgba(0, 210, 255, 0.1) !important; }
+.glass-input { 
+    background: rgba(255, 255, 255, 0.05) !important; 
+    border: 1px solid var(--glass-border) !important; 
+    border-radius: 12px !important; 
+    color: white !important; 
+}
 
 /* Responsiveness */
 @media (max-width: 991px) {
-    .navmenu ul { display: none; } /* Mobile toggle visibility handled by vendor JS */
+    .navmenu ul { display: none; }
 }
+
 /* VALUE PROPOSITION ENHANCEMENTS */
 .values .value-item h5 {
   font-size: 1.1rem;
-  color: var(--deep-navy);
+  color: var(--primary-blue); /* Changed from navy to blue */
   margin-bottom: 8px;
   position: relative;
   padding-left: 15px;
 }
 
-/* Bullet accent for the glass theme */
 .values .value-item h5::before {
   content: '';
   position: absolute;
@@ -111,34 +117,20 @@ body {
   box-shadow: 0 0 10px var(--primary-blue);
 }
 
-.values .glass-card h3 {
-  font-size: 1.5rem;
-  letter-spacing: -0.02em;
-}
-
 .values .value-item p {
-  color: #555;
+  color: #bbbbbb; /* Lighter grey for dark mode */
   line-height: 1.6;
 }
 
-/* Animation for horizontal cards */
 .values .glass-card:hover {
   transform: scale(1.02);
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05); /* Very subtle highlight on hover */
 }
+
 .custom-list li {
     padding: 8px 0;
     display: flex;
     align-items: center;
     font-size: 0.95rem;
-    color: #444;
-}
-
-.custom-list li i {
-    font-size: 1.1rem;
-}
-
-.featured-glass {
-    border: 1px solid var(--primary-blue) !important;
-    background: rgba(0, 210, 255, 0.05) !important;
+    color: #cccccc; /* Lighter text */
 }
