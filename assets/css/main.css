@@ -134,3 +134,24 @@ body {
     font-size: 0.95rem;
     color: #cccccc; /* Lighter text */
 }
+/* Makes all glass-input placeholders white with slight transparency */
+.glass-input::placeholder {
+    color: rgb(255, 255, 255) !important;
+    opacity: 1; /* Required for Firefox */
+}
+
+/* For the Select dropdown specifically (the first disabled option) */
+.glass-input option:disabled {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Ensures the text you actually type is also white */
+.glass-input {
+    color: white !important;
+}
+
+/* Fix for the dropdown options background so you can read them */
+.glass-input option {
+    background-color: #050a10; /* Matches your body background */
+    color: white;
+}
