@@ -351,6 +351,16 @@
     <script>
         AOS.init({ duration: 1000, once: true });
     </script>
+<script>
+  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+  const body = document.querySelector('body');
+
+  mobileNavToggleBtn.addEventListener('click', function(e) {
+    body.classList.toggle('mobile-nav-active');
+    this.classList.toggle('bi-list');
+    this.classList.toggle('bi-x');
+  });
+</script>
 
     <div id="successModal" class="success-modal">
     <div class="glass-card success-content p-5 text-center" data-aos="zoom-in">

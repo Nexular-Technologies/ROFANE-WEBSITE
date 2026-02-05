@@ -175,3 +175,45 @@ h1, h2, h3, h4, h5, h6, .text-gradient {
     animation: pulse-blue 2s infinite;
     cursor: default;
 }
+@media (max-width: 991px) {
+  /* Ensure the header container stays a row */
+  .header .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Reset the navmenu behavior for mobile */
+  .navmenu {
+    order: 2; /* Keeps it to the right */
+  }
+
+  /* The actual list of links */
+  .navmenu ul {
+    display: none; /* Hide by default */
+    position: fixed;
+    inset: 80px 20px auto 20px; /* Position it below the header */
+    padding: 20px;
+    background: rgba(5, 10, 16, 0.95); /* Darker background for readability */
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999;
+  }
+
+  /* Show menu when active class is on body */
+  .mobile-nav-active .navmenu ul {
+    display: flex;
+  }
+
+  /* Fix the toggle icon visibility */
+  .mobile-nav-toggle {
+    display: block !important;
+    font-size: 32px;
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 10000;
+  }
+}
