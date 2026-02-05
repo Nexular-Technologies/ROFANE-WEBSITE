@@ -148,3 +148,30 @@ h1, h2, h3, h4, h5, h6, .text-gradient {
 @media (max-width: 991px) {
   .navmenu ul { display: none; }
 }
+/* Success Modal Styles */
+.success-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(5, 10, 16, 0.85); /* Matches body color */
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.success-content {
+    max-width: 500px;
+    width: 100%;
+}
+
+.success-modal.active {
+    display: flex;
+}
+
+/* Reusing your play-button pulse for the checkmark */
+.success-modal .play-button {
+    animation: pulse-blue 2s infinite;
+    cursor: default;
+}
