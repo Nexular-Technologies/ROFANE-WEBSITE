@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/rofanhrv/repositories/ROFANE-WEBSITE-TEST/
+    - /bin/cp -R * $DEPLOYPATH
