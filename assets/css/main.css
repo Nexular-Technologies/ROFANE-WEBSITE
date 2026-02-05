@@ -1,3 +1,4 @@
+/* 1. VARIABLE DEFINITIONS */
 :root {
   --primary-blue: #00D2FF;
   --deep-navy: #002B5B; 
@@ -7,29 +8,33 @@
   --default-font: "Plus Jakarta Sans", sans-serif;
 }
 
-/* Base Styles */
+/* 2. BASE & BODY STYLES */
 body {
   background-color: #050a10;
   color: #ffffff; 
   font-family: var(--default-font);
   margin: 0;
   overflow-x: hidden;
+  /* Prevent blue highlight on tap for mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Background Layer */
+/* 3. BACKGROUND ANIMATIONS (Responsive) */
 .bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 #vanta-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.blob { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.15; }
-.blob-1 { width: 600px; height: 600px; background: var(--primary-blue); top: -10%; left: -5%; }
-.blob-2 { width: 500px; height: 500px; background: var(--accent-cyan); bottom: 5%; right: -5%; }
 
-/* Navigation & Header */
+.blob { position: absolute; filter: blur(100px); border-radius: 50%; opacity: 0.15; }
+.blob-1 { width: 40vw; height: 40vw; background: var(--primary-blue); top: -10%; left: -5%; }
+.blob-2 { width: 35vw; height: 35vw; background: var(--accent-cyan); bottom: 5%; right: -5%; }
+
+/* 4. HEADER & DESKTOP NAVIGATION */
 .header {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
   border-bottom: 1px solid var(--glass-border);
   padding: 12px 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .navmenu ul {
@@ -41,72 +46,114 @@ body {
   align-items: center;
 }
 
-.navmenu a { color: #ffffff; font-weight: 600; text-decoration: none; transition: 0.3s; opacity: 0.85; }
-.navmenu a:hover, .navmenu .active { color: var(--primary-blue); opacity: 1; }
-
-/* Glass Components */
-.glass-card {
-  background: var(--glass-bg) !important;
-  backdrop-filter: blur(25px) saturate(180%);
-  -webkit-backdrop-filter: blur(25px) saturate(180%);
-  border: 1.5px solid var(--glass-border);
-  border-radius: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+.navmenu a { 
+  color: #ffffff; 
+  font-weight: 600; 
+  text-decoration: none; 
+  transition: 0.3s; 
+  opacity: 0.85; 
 }
 
-.glass-card:hover {
-  transform: translateY(-4px) !important; /* Unified subtle lift */
-  border-color: var(--accent-cyan);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  background: rgba(255, 255, 255, 0.05) !important;
+.navmenu a:hover, .navmenu .active { 
+  color: var(--primary-blue); 
+  opacity: 1; 
 }
 
-/* Typography & Gradients */
-h1, h2, h3, h4, h5, h6, .text-gradient {
+/* 5. TYPOGRAPHY & FLUID SCALING */
+h1, h2, h3, .text-gradient {
   background: linear-gradient(45deg, var(--primary-blue), #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
   display: inline-block;
+  word-wrap: break-word; /* Prevents text overflow on 320px screens */
 }
 
-/* Force All Body Text to White */
-.main p, .main li, .main div:not(.text-gradient), .small, .lead, .footer p {
-  color: #ffffff !important;
-  line-height: 1.6;
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); } /* Dynamically scales font */
+h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+
+/* 6. GLASS COMPONENTS */
+.glass-card {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 30px;
+  padding: clamp(1.5rem, 3vw, 3rem); /* Fluid padding */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease;
 }
 
-/* Icons using your Accent Cyan */
-.main i:not(.bi-list):not(.bi-x) {
-  color: var(--accent-cyan) !important;
+/* Hover effects only for devices with a mouse */
+@media (hover: hover) {
+  .glass-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: var(--accent-cyan);
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
 }
 
-/* Forms & Inputs */
-.glass-input { 
-  background: rgba(0, 0, 0, 0.3) !important; 
-  border: 1px solid var(--glass-border) !important; 
-  border-radius: 12px !important; 
-  color: white !important;
-  transition: 0.3s;
+/* --- Mobile Menu Refinement --- */
+@media (max-width: 991px) {
+  /* Fix Header Layout Spacing */
+  .header .container-fluid {
+    padding: 10px 20px !important;
+  }
+
+  /* Style the Toggle Icon (Hamburger/X) */
+  .mobile-nav-toggle {
+    display: block !important;
+    font-size: 2.2rem !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    z-index: 10001 !important; /* Above everything */
+    position: relative !important;
+  }
+
+  /* Full-Screen Dark Overlay Menu */
+  .navmenu ul {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: #050a10 !important; /* Solid dark background to hide hero text */
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 30px !important;
+    z-index: 10000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    /* Animation: Start off-screen right */
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Slide in when body has active class */
+  .mobile-nav-active .navmenu ul {
+    transform: translateX(0) !important;
+  }
+
+  /* Mobile Link Styles */
+  .navmenu ul li a {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
+  }
+  
+  .mobile-nav-active .navmenu ul li a {
+    opacity: 0.9 !important;
+  }
 }
 
-.glass-input::placeholder {
-  color: rgba(255, 255, 255, 0.7) !important;
-  opacity: 1;
+/* Fix for tiny screens (320px) */
+@media (max-width: 350px) {
+  .header .logo img { max-height: 30px !important; }
+  .mobile-nav-toggle { font-size: 1.8rem !important; }
 }
-
-.glass-input:focus {
-  border-color: var(--primary-blue) !important;
-  box-shadow: 0 0 0 0.25rem rgba(0, 210, 255, 0.25);
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  outline: none;
-}
-
-.glass-input option { background-color: #050a10; color: white; }
-
-/* Buttons - High Contrast White Style */
+/* --- Reinstated Button Styles --- */
 .btn-getstarted, .btn-learn-more {
   background-color: #ffffff !important;
   color: var(--deep-navy) !important;
@@ -117,6 +164,7 @@ h1, h2, h3, h4, h5, h6, .text-gradient {
   border: 2px solid #ffffff !important;
   transition: all 0.3s ease;
   display: inline-block;
+  cursor: pointer;
 }
 
 .btn-getstarted:hover, .btn-learn-more:hover {
@@ -126,94 +174,11 @@ h1, h2, h3, h4, h5, h6, .text-gradient {
   backdrop-filter: blur(5px);
 }
 
-/* Animations & Specialized Items */
-.play-button {
-  width: 70px; height: 70px;
-  background: var(--primary-blue); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 2rem;
-  animation: pulse-blue 2s infinite;
-}
-
-@keyframes pulse-blue {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
-}
-
-.academy-banner { background: linear-gradient(135deg, var(--deep-navy), var(--accent-cyan)) !important; }
-.featured-glass { border: 2.5px solid var(--primary-blue) !important; background: rgba(0, 210, 255, 0.1) !important; }
-
-/* Responsive */
+/* Mobile Menu Button Specifics */
 @media (max-width: 991px) {
-  .navmenu ul { display: none; }
-}
-/* Success Modal Styles */
-.success-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(5, 10, 16, 0.85); /* Matches body color */
-    backdrop-filter: blur(10px);
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.success-content {
-    max-width: 500px;
-    width: 100%;
-}
-
-.success-modal.active {
-    display: flex;
-}
-
-/* Reusing your play-button pulse for the checkmark */
-.success-modal .play-button {
-    animation: pulse-blue 2s infinite;
-    cursor: default;
-}
-@media (max-width: 991px) {
-  /* Ensure the header container stays a row */
-  .header .container-fluid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  /* Reset the navmenu behavior for mobile */
-  .navmenu {
-    order: 2; /* Keeps it to the right */
-  }
-
-  /* The actual list of links */
-  .navmenu ul {
-    display: none; /* Hide by default */
-    position: fixed;
-    inset: 80px 20px auto 20px; /* Position it below the header */
-    padding: 20px;
-    background: rgba(5, 10, 16, 0.95); /* Darker background for readability */
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 9999;
-  }
-
-  /* Show menu when active class is on body */
-  .mobile-nav-active .navmenu ul {
-    display: flex;
-  }
-
-  /* Fix the toggle icon visibility */
-  .mobile-nav-toggle {
-    display: block !important;
-    font-size: 32px;
-    color: #ffffff;
-    cursor: pointer;
-    z-index: 10000;
+  .navmenu ul .btn-getstarted {
+    margin-top: 20px;
+    width: 80%; /* Makes it easier to tap on mobile */
+    text-align: center;
   }
 }
