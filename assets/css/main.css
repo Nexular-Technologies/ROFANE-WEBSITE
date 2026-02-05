@@ -1,4 +1,7 @@
-/* 1. VARIABLE DEFINITIONS */
+/* ================================================================
+1. VARIABLE DEFINITIONS 
+================================================================
+*/
 :root {
   --primary-blue: #00D2FF;
   --deep-navy: #002B5B; 
@@ -8,18 +11,29 @@
   --default-font: "Plus Jakarta Sans", sans-serif;
 }
 
-/* 2. BASE & BODY STYLES */
+/* ================================================================
+2. BASE & BODY STYLES 
+================================================================
+*/
 body {
   background-color: #050a10;
   color: #ffffff; 
   font-family: var(--default-font);
   margin: 0;
+  padding: 0;
   overflow-x: hidden;
-  /* Prevent blue highlight on tap for mobile */
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 3. BACKGROUND ANIMATIONS (Responsive) */
+/* Prevent background scrolling when mobile menu is active */
+body.mobile-nav-active {
+  overflow: hidden;
+}
+
+/* ================================================================
+3. BACKGROUND ANIMATIONS & BLOBS 
+================================================================
+*/
 .bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 #vanta-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 
@@ -27,10 +41,14 @@ body {
 .blob-1 { width: 40vw; height: 40vw; background: var(--primary-blue); top: -10%; left: -5%; }
 .blob-2 { width: 35vw; height: 35vw; background: var(--accent-cyan); bottom: 5%; right: -5%; }
 
-/* 4. HEADER & DESKTOP NAVIGATION */
+/* ================================================================
+4. HEADER & DESKTOP NAVIGATION 
+================================================================
+*/
 .header {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-bottom: 1px solid var(--glass-border);
   padding: 12px 0;
   z-index: 1000;
@@ -59,7 +77,15 @@ body {
   opacity: 1; 
 }
 
-/* 5. TYPOGRAPHY & FLUID SCALING */
+.logo {
+  max-width: 200px; /* Safety cap for desktop */
+  height: auto;
+}
+
+/* ================================================================
+5. TYPOGRAPHY & FLUID SCALING 
+================================================================
+*/
 h1, h2, h3, .text-gradient {
   background: linear-gradient(45deg, var(--primary-blue), #ffffff);
   -webkit-background-clip: text;
@@ -67,25 +93,27 @@ h1, h2, h3, .text-gradient {
   background-clip: text;
   font-weight: 800;
   display: inline-block;
-  word-wrap: break-word; /* Prevents text overflow on 320px screens */
+  word-wrap: break-word;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); } /* Dynamically scales font */
-h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); } 
+h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
 
-/* 6. GLASS COMPONENTS */
+/* ================================================================
+6. GLASS COMPONENTS & FORM INPUTS 
+================================================================
+*/
 .glass-card {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border: 1.5px solid var(--glass-border);
   border-radius: 30px;
-  padding: clamp(1.5rem, 3vw, 3rem); /* Fluid padding */
+  padding: clamp(1.5rem, 3vw, 3rem);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease;
 }
 
-/* Hover effects only for devices with a mouse */
 @media (hover: hover) {
   .glass-card:hover {
     transform: translateY(-4px) !important;
@@ -94,66 +122,122 @@ h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
   }
 }
 
-/* --- Mobile Menu Refinement --- */
-@media (max-width: 991px) {
-  /* Fix Header Layout Spacing */
-  .header .container-fluid {
-    padding: 10px 20px !important;
-  }
+.glass-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--glass-border) !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  padding: 12px 20px !important;
+  transition: all 0.3s ease !important;
+}
 
-  /* Style the Toggle Icon (Hamburger/X) */
+.glass-input::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--primary-blue) !important;
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2) !important;
+  outline: none !important;
+}
+
+/* ================================================================
+7. MOBILE NAVIGATION (Responsive Overlay) 
+================================================================
+*/
+@media (max-width: 1199px) {
+  .header .container-fluid { padding: 10px 20px !important; }
+
   .mobile-nav-toggle {
     display: block !important;
     font-size: 2.2rem !important;
     color: #ffffff !important;
     cursor: pointer !important;
-    z-index: 10001 !important; /* Above everything */
+    z-index: 99999 !important; /* Above all content */
     position: relative !important;
   }
 
-  /* Full-Screen Dark Overlay Menu */
   .navmenu ul {
     display: flex !important;
     position: fixed !important;
     inset: 0 !important;
-    background: #050a10 !important; /* Solid dark background to hide hero text */
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(5, 10, 16, 0.95) !important; /* Dark glass for contrast */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 30px !important;
-    z-index: 10000 !important;
+    gap: 20px !important;
+    z-index: 99998 !important; /* Below toggle */
     margin: 0 !important;
     padding: 0 !important;
-    
-    /* Animation: Start off-screen right */
+    list-style: none !important;
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Slide in when body has active class */
-  .mobile-nav-active .navmenu ul {
-    transform: translateX(0) !important;
+  .mobile-nav-active .navmenu ul { transform: translateX(0) !important; }
+
+  /* Dim background while menu is open */
+  .mobile-nav-active .main, 
+  .mobile-nav-active .footer,
+  .mobile-nav-active .bg-wrapper {
+    opacity: 0.1 !important;
+    transition: 0.3s ease;
   }
 
-  /* Mobile Link Styles */
+  .navmenu ul li { width: 100%; text-align: center; }
+
   .navmenu ul li a {
+    display: inline-block;
     font-size: 1.8rem !important;
     font-weight: 700 !important;
+    padding: 10px 0;
     opacity: 0;
-    transition: opacity 0.3s ease 0.2s;
+    transform: translateY(20px);
+    transition: all 0.4s ease 0.2s;
   }
   
-  .mobile-nav-active .navmenu ul li a {
-    opacity: 0.9 !important;
-  }
+  .mobile-nav-active .navmenu ul li a { opacity: 1 !important; transform: translateY(0); }
 }
 
-/* Fix for tiny screens (320px) */
-@media (max-width: 350px) {
-  .header .logo img { max-height: 30px !important; }
-  .mobile-nav-toggle { font-size: 1.8rem !important; }
+/* ================================================================
+8. BOOTSTRAP MODAL & SUCCESS POPUP 
+================================================================
+*/
+.modal { z-index: 100001 !important; }
+
+.modal-backdrop {
+  z-index: 100000 !important;
+  background-color: rgba(5, 10, 16, 0.8) !important;
+  backdrop-filter: blur(8px);
 }
-/* --- Reinstated Button Styles --- */
+
+.modal-content.glass-card {
+  background: rgba(10, 20, 30, 0.9) !important;
+  border: 1.5px solid var(--glass-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.play-button i.bi-check2 {
+  font-size: 3rem;
+  color: var(--primary-blue);
+  display: block;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ================================================================
+9. BUTTONS & RESPONSIVENESS 
+================================================================
+*/
 .btn-getstarted, .btn-learn-more {
   background-color: #ffffff !important;
   color: var(--deep-navy) !important;
@@ -174,11 +258,81 @@ h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
   backdrop-filter: blur(5px);
 }
 
-/* Mobile Menu Button Specifics */
 @media (max-width: 991px) {
   .navmenu ul .btn-getstarted {
     margin-top: 20px;
-    width: 80%; /* Makes it easier to tap on mobile */
+    width: 80%;
     text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease 0.4s, transform 0.4s ease 0.4s !important;
   }
+  .mobile-nav-active .navmenu ul .btn-getstarted {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* Extra small screen adjustments (320px) */
+@media (max-width: 350px) {
+  .header .logo img { max-height: 30px !important; }
+  .mobile-nav-toggle { font-size: 1.8rem !important; }
+  h1 { font-size: 1.8rem !important; }
+}
+
+#contact { position: relative; z-index: 1; }
+/* --- PLAY BUTTON PULSE ANIMATION --- */
+.play-button {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 210, 255, 0.2);
+    border: 2px solid var(--primary-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* The Pulse Rings */
+.play-button::before,
+.play-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--primary-blue);
+    animation: pulse-ring 2s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.play-button::after {
+    animation-delay: 1s;
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* --- FIXING THE HORIZONTAL LINE --- */
+/* Target the glightbox link specifically to kill the underline */
+a.glightbox.play-overlay, 
+a.glightbox.play-overlay:hover, 
+a.glightbox.play-overlay:active, 
+a.glightbox.play-overlay:focus {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+/* Ensure icon is perfectly centered */
+.play-button i {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-left: 5px; /* Visual nudge for triangle symmetry */
+    line-height: 0;
 }

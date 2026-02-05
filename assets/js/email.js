@@ -10,17 +10,26 @@
     emailjs.init("vrPfxZMgyjrWE_X91");
 })();
 
-// Modal control functions
+/**
+ * showSuccessModal
+ * Manages the Bootstrap 5 Modal instance to ensure 
+ * it displays correctly above the glassmorphism UI.
+ */
 function showSuccessModal() {
-    const modal = document.getElementById('successModal');
-    if (modal) modal.classList.add('active');
+    const modalElement = document.getElementById('successModal');
+    if (modalElement) {
+        // Get existing instance or create a new one to prevent memory leaks
+        let bsModal = bootstrap.Modal.getInstance(modalElement);
+        if (!bsModal) {
+            bsModal = new bootstrap.Modal(modalElement);
+        }
+        bsModal.show();
+    }
 }
 
-function closeModal() {
-    const modal = document.getElementById('successModal');
-    if (modal) modal.classList.remove('active');
-}
-
+/**
+ * Form Submission Logic
+ */
 window.onload = function() {
     const contactForm = document.querySelector('.php-email-form');
     
@@ -28,7 +37,7 @@ window.onload = function() {
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // 2. Visual feedback: Disable button during transmission
+            // 2. Visual feedback: Disable button and show "Transmitting" state
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = 'TRANSMITTING...';
@@ -42,19 +51,19 @@ window.onload = function() {
                 message: this.querySelector('textarea[name="message"]').value
             };
 
-            // 4. Send the email
+            // 4. Send the email using Service ID and Template ID
             emailjs.send('service_5kreiu7', 'Rofane_email', templateParams)
                 .then(function() {
-                    // SUCCESS: Trigger custom modal
+                    // SUCCESS: Trigger the high-z-index success modal
                     showSuccessModal(); 
                     contactForm.reset(); 
                 }, function(error) {
-                    // ERROR: Log the detailed error
-                    console.log('EMAILJS ERROR:', error);
-                    alert('Transmission Failed. Error: ' + (error.text || 'Check connection'));
+                    // ERROR: Log the detailed error to console and alert the user
+                    console.error('EMAILJS ERROR:', error);
+                    alert('Transmission Failed. Error: ' + (error.text || 'Please check your connection and try again.'));
                 })
                 .finally(() => {
-                    // 5. Restore the button state
+                    // 5. Restore the button state regardless of success or failure
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                 });
