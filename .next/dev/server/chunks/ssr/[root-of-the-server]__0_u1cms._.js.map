@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///C:/Youtube/Nexular/ROFANE-WEBSITE/src/app/blog/page.tsx"],"sourcesContent":["import { notFound } from \"next/navigation\";\r\n\r\nexport default function BlogPage() {\r\n  notFound();\r\n}\r\n"],"names":["BlogPage"],"mappings":";;;;AAAA;AAAA;;AAEe,SAASA;IACtB,IAAA,iMAAQ;AACV"}}]
+}

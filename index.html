@@ -43,6 +43,8 @@
     .recruitment .info-block i { font-size: 1.5rem; color: #4682b4; }
     .recruitment .info-block h4 { color: #4682b4; font-weight: 700; text-transform: uppercase; font-size: 1.2rem; margin-bottom: 12px; }
     .recruitment .info-block p { font-size: 1.15rem; line-height: 1.7; }
+    .blog-card-clickable { cursor: pointer; }
+    .blog-modal-content { white-space: pre-wrap; line-height: 1.7; color: #333; }
   </style>
 </head>
 
@@ -153,6 +155,39 @@
         </div>
       </div>
     </section>
+
+    <section id="insights" class="section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Insights</h2>
+        <p>Latest published articles from Rofane leadership and delivery teams.</p>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div id="embedded-blog-list" class="row gy-4">
+          <div class="col-12">
+            <div class="service-item position-relative">
+              <h4>Loading insights...</h4>
+              <p>Please wait while we fetch the latest posts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal fade" id="blogPostModal" tabindex="-1" aria-labelledby="blogPostModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="blogPostModalLabel">Blog Post</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img id="blogPostModalImage" src="" alt="Blog preview" class="img-fluid rounded mb-3" style="display:none; width:100%; max-height:300px; object-fit:cover;">
+            <p id="blogPostModalMeta" class="text-muted"></p>
+            <div id="blogPostModalContent" class="blog-modal-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section id="services-offering" class="services section light-background">
       <div class="container section-title" data-aos="fade-up">

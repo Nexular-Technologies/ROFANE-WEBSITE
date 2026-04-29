@@ -1,0 +1,13 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/blog/page": "/admin/blog",
+  "/api/admin-entry/route": "/api/admin-entry",
+  "/api/admin/blog/posts/[slug]/route": "/api/admin/blog/posts/[slug]",
+  "/api/admin/blog/posts/route": "/api/admin/blog/posts",
+  "/api/admin/blog/upload/route": "/api/admin/blog/upload",
+  "/api/blog/posts/[slug]/route": "/api/blog/posts/[slug]",
+  "/api/blog/posts/route": "/api/blog/posts",
+  "/blog/page": "/blog",
+  "/page": "/"
+}

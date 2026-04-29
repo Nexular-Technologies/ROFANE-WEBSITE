@@ -1,0 +1,27 @@
+-- CreateTable
+CREATE TABLE "BlogPost" (
+    "id" SERIAL NOT NULL,
+    "slug" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "excerpt" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "preview_image_url" TEXT NOT NULL,
+    "categories" TEXT NOT NULL DEFAULT '',
+    "keywords" TEXT NOT NULL,
+    "author" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'draft',
+    "reading_minutes" INTEGER NOT NULL DEFAULT 5,
+    "published_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "seo_title" TEXT,
+    "seo_description" TEXT,
+    "seo_keywords" TEXT,
+    "canonical_url" TEXT,
+
+    CONSTRAINT "BlogPost_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "BlogPost_slug_key" ON "BlogPost"("slug");
+
+-- CreateIndex
+CREATE INDEX "BlogPost_status_published_at_idx" ON "BlogPost"("status", "published_at");

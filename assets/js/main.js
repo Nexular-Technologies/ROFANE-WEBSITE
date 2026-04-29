@@ -155,4 +155,166 @@
     }
   });
 
+  /**
+   * 5. EMBEDDED BLOG + HIDDEN ADMIN ENTRY
+   */
+  let detectedBlogApiBase = 'http://localhost:3001';
+
+  async function fetchPublishedPosts() {
+    const candidates = [
+      '/api/blog/posts',
+      'http://localhost:3000/api/blog/posts',
+      'http://localhost:3001/api/blog/posts'
+    ];
+
+    for (const endpoint of candidates) {
+      try {
+        const response = await fetch(endpoint, { method: 'GET' });
+        if (!response.ok) continue;
+        const data = await response.json();
+        if (data && Array.isArray(data.posts)) {
+          const endpointUrl = new URL(endpoint, window.location.origin);
+          detectedBlogApiBase = `${endpointUrl.protocol}//${endpointUrl.host}`;
+          return data.posts;
+        }
+      } catch (error) {
+        continue;
+      }
+    }
+
+    return [];
+  }
+
+  function formatDate(value) {
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return '';
+    return parsed.toLocaleDateString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function resolveImageUrl(url) {
+    if (!url) return '';
+    if (/^https?:\/\//i.test(url)) return url;
+    if (url.startsWith('/')) {
+      return `${detectedBlogApiBase}${url}`;
+    }
+    return `${detectedBlogApiBase}/${url.replace(/^\/+/, '')}`;
+  }
+
+  function openBlogModal(post) {
+    const modalRoot = document.getElementById('blogPostModal');
+    const title = document.getElementById('blogPostModalLabel');
+    const meta = document.getElementById('blogPostModalMeta');
+    const content = document.getElementById('blogPostModalContent');
+    const image = document.getElementById('blogPostModalImage');
+    if (!modalRoot || !title || !meta || !content || !image) return;
+
+    title.textContent = post.title || 'Blog Post';
+    meta.textContent = `By ${post.author || 'Unknown'} | ${post.readingMinutes || 0} min read | ${formatDate(post.publishedAt)}`;
+    content.textContent = post.content || '';
+
+    if (post.previewImageUrl) {
+      image.src = post.previewImageUrl;
+      image.style.display = 'block';
+    } else {
+      image.src = '';
+      image.style.display = 'none';
+    }
+
+    if (window.bootstrap && typeof window.bootstrap.Modal === 'function') {
+      const instance = window.bootstrap.Modal.getOrCreateInstance(modalRoot);
+      instance.show();
+    }
+  }
+
+  function renderEmbeddedBlog(posts) {
+    const target = document.getElementById('embedded-blog-list');
+    if (!target) return;
+
+    if (!posts.length) {
+      target.innerHTML = `
+        <div class="col-12">
+          <div class="service-item position-relative">
+            <h4>No published insights yet</h4>
+            <p>New thought leadership articles will appear here once published.</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    target.innerHTML = posts.map((post) => `
+      <div class="col-lg-6 col-md-12 d-flex">
+        <article class="service-item position-relative blog-card-clickable">
+          ${post.preview_image_url ? `<img src="${escapeHtml(resolveImageUrl(post.preview_image_url))}" alt="${escapeHtml(post.title)}" style="width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin-bottom:12px;" loading="lazy" />` : ''}
+          <h4>${escapeHtml(post.title)}</h4>
+          <p>${escapeHtml(post.excerpt)}</p>
+          <p><strong>By:</strong> ${escapeHtml(post.author)} &nbsp;|&nbsp; <strong>Read:</strong> ${escapeHtml(post.reading_minutes)} min</p>
+          <p><strong>Published:</strong> ${formatDate(post.published_at)}</p>
+          <button
+            type="button"
+            class="btn btn-primary btn-sm js-read-blog"
+            data-title="${escapeHtml(post.title)}"
+            data-author="${escapeHtml(post.author)}"
+            data-reading-minutes="${escapeHtml(post.reading_minutes)}"
+            data-published-at="${escapeHtml(post.published_at)}"
+            data-content="${escapeHtml(post.content || '')}"
+            data-preview-image-url="${escapeHtml(resolveImageUrl(post.preview_image_url || ''))}"
+          >Read full article</button>
+        </article>
+      </div>
+    `).join('');
+
+    target.querySelectorAll('.js-read-blog').forEach((button) => {
+      button.addEventListener('click', () => {
+        openBlogModal({
+          title: button.getAttribute('data-title') || '',
+          author: button.getAttribute('data-author') || '',
+          readingMinutes: button.getAttribute('data-reading-minutes') || '',
+          publishedAt: button.getAttribute('data-published-at') || '',
+          content: button.getAttribute('data-content') || '',
+          previewImageUrl: button.getAttribute('data-preview-image-url') || ''
+        });
+      });
+    });
+  }
+
+  window.addEventListener('load', async () => {
+    const posts = await fetchPublishedPosts();
+    renderEmbeddedBlog(posts);
+  });
+
+  const adminKeyword = 'bread';
+  let typedBuffer = '';
+
+  // Hidden admin trigger: press Ctrl + Shift + B to open admin editor.
+  window.addEventListener('keydown', (event) => {
+    const isTrigger = event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'b';
+    if (isTrigger) {
+      window.location.href = `${detectedBlogApiBase}/admin/blog`;
+      return;
+    }
+
+    if (event.ctrlKey || event.altKey || event.metaKey) return;
+    if (event.key.length !== 1) return;
+
+    typedBuffer = (typedBuffer + event.key.toLowerCase()).slice(-adminKeyword.length);
+    if (typedBuffer === adminKeyword) {
+      typedBuffer = '';
+      window.location.href = `${detectedBlogApiBase}/admin/blog`;
+    }
+  });
+
 })();
