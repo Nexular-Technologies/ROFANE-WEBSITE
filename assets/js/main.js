@@ -266,6 +266,7 @@
           <button
             type="button"
             class="btn btn-primary btn-sm js-read-blog"
+            style="color:#fff;"
             data-title="${escapeHtml(post.title)}"
             data-author="${escapeHtml(post.author)}"
             data-reading-minutes="${escapeHtml(post.reading_minutes)}"
