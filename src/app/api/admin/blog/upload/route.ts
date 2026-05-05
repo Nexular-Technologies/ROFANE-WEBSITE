@@ -15,36 +15,41 @@ function extensionForMimeType(mimeType: string) {
 }
 
 export async function POST(request: Request) {
-  if (!isAdminAuthorized(request)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  try {
+    if (!isAdminAuthorized(request)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const formData = await request.formData();
+    const file = formData.get("file");
+
+    if (!(file instanceof File)) {
+      return NextResponse.json({ error: "Missing file" }, { status: 400 });
+    }
+
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json({ error: "Only image uploads are allowed" }, { status: 400 });
+    }
+
+    if (file.size > MAX_UPLOAD_SIZE) {
+      return NextResponse.json({ error: "File exceeds 5MB limit" }, { status: 400 });
+    }
+
+    const uploadDir = path.join(process.cwd(), "public", "uploads", "blog");
+    await mkdir(uploadDir, { recursive: true });
+
+    const extension = extensionForMimeType(file.type) || path.extname(file.name) || ".bin";
+    const fileName = `${Date.now()}-${randomUUID()}${extension}`;
+    const diskPath = path.join(uploadDir, fileName);
+    const bytes = await file.arrayBuffer();
+
+    await writeFile(diskPath, Buffer.from(bytes));
+
+    return NextResponse.json({
+      url: `/uploads/blog/${fileName}`,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Upload failed";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const formData = await request.formData();
-  const file = formData.get("file");
-
-  if (!(file instanceof File)) {
-    return NextResponse.json({ error: "Missing file" }, { status: 400 });
-  }
-
-  if (!file.type.startsWith("image/")) {
-    return NextResponse.json({ error: "Only image uploads are allowed" }, { status: 400 });
-  }
-
-  if (file.size > MAX_UPLOAD_SIZE) {
-    return NextResponse.json({ error: "File exceeds 5MB limit" }, { status: 400 });
-  }
-
-  const uploadDir = path.join(process.cwd(), "public", "uploads", "blog");
-  await mkdir(uploadDir, { recursive: true });
-
-  const extension = extensionForMimeType(file.type) || path.extname(file.name) || ".bin";
-  const fileName = `${Date.now()}-${randomUUID()}${extension}`;
-  const diskPath = path.join(uploadDir, fileName);
-  const bytes = await file.arrayBuffer();
-
-  await writeFile(diskPath, Buffer.from(bytes));
-
-  return NextResponse.json({
-    url: `/uploads/blog/${fileName}`,
-  });
 }
