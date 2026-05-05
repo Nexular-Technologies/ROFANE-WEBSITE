@@ -17,8 +17,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma client and build Next.js
-RUN npx prisma generate
-RUN npm run build -- --no-lint 2>/dev/null || npx next build
+RUN ./node_modules/.bin/prisma generate
+RUN ./node_modules/.bin/next build
 
 # Production image
 FROM base AS runner
