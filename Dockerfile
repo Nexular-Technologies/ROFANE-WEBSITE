@@ -32,7 +32,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-RUN mkdir -p ./public/uploads/blog && chown -R nextjs:nodejs ./public
+RUN mkdir -p ./tmp/uploads/blog && chown -R nextjs:nodejs ./tmp ./public
 
 # Standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

@@ -14,6 +14,10 @@ function extensionForMimeType(mimeType: string) {
   return "";
 }
 
+function getUploadDir() {
+  return process.env.BLOG_UPLOAD_DIR?.trim() || path.join(process.cwd(), "tmp", "uploads", "blog");
+}
+
 export async function POST(request: Request) {
   try {
     if (!isAdminAuthorized(request)) {
@@ -35,7 +39,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "File exceeds 5MB limit" }, { status: 400 });
     }
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "blog");
+    const uploadDir = getUploadDir();
     await mkdir(uploadDir, { recursive: true });
 
     const extension = extensionForMimeType(file.type) || path.extname(file.name) || ".bin";
@@ -46,7 +50,7 @@ export async function POST(request: Request) {
     await writeFile(diskPath, Buffer.from(bytes));
 
     return NextResponse.json({
-      url: `/uploads/blog/${fileName}`,
+      url: `/api/blog/uploads/${fileName}`,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Upload failed";
