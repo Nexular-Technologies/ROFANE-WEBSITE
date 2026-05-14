@@ -155,6 +155,8 @@
     return `/${url.replace(/^\/+/, '')}`;
   };
 
+  const postDetailsCache = new Map();
+
   const openBlogModal = (post) => {
     const modalRoot = document.getElementById('blogPostModal');
     const title = document.getElementById('blogPostModalLabel');
@@ -180,11 +182,56 @@
     }
   };
 
-  const renderEmbeddedBlog = (posts) => {
+  const openBlogModalBySlug = async (summary) => {
+    openBlogModal({
+      title: summary.title,
+      author: summary.author,
+      readingMinutes: summary.readingMinutes,
+      publishedAt: summary.publishedAt,
+      content: 'Loading article...',
+      previewImageUrl: summary.previewImageUrl
+    });
+
+    if (!summary.slug) {
+      openBlogModal({ ...summary, content: 'Unable to load full article.' });
+      return;
+    }
+
+    if (postDetailsCache.has(summary.slug)) {
+      const cached = postDetailsCache.get(summary.slug);
+      openBlogModal({
+        ...summary,
+        content: cached.content || 'No content available.',
+        previewImageUrl: resolveImageUrl(cached.preview_image_url || summary.previewImageUrl)
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/blog/posts/${encodeURIComponent(summary.slug)}`, { method: 'GET' });
+      if (!response.ok) throw new Error(`Blog detail API returned ${response.status}`);
+      const payload = await response.json();
+      const post = payload?.post;
+      postDetailsCache.set(summary.slug, post || {});
+
+      openBlogModal({
+        ...summary,
+        content: post?.content || 'No content available.',
+        previewImageUrl: resolveImageUrl(post?.preview_image_url || summary.previewImageUrl)
+      });
+    } catch (error) {
+      openBlogModal({ ...summary, content: 'Unable to load full article right now.' });
+    }
+  };
+
+  const renderEmbeddedBlog = (posts, limit) => {
     const target = document.getElementById('embedded-blog-list');
     if (!target) return;
 
-    if (!posts.length) {
+    const resolvedLimit = Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : undefined;
+    const visiblePosts = resolvedLimit ? posts.slice(0, resolvedLimit) : posts;
+
+    if (!visiblePosts.length) {
       target.innerHTML = `
         <div class="col-12">
           <div class="glass-card p-4 text-center">
@@ -196,7 +243,7 @@
       return;
     }
 
-    target.innerHTML = posts.map((post) => `
+    target.innerHTML = visiblePosts.map((post) => `
       <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
         <article class="blog-card blog-card-clickable w-100">
           ${post.preview_image_url ? `<img src="${escapeHtml(resolveImageUrl(post.preview_image_url))}" alt="${escapeHtml(post.title)}" class="blog-card-image" loading="lazy" />` : ''}
@@ -207,11 +254,11 @@
           <button
             type="button"
             class="btn btn-primary btn-sm js-read-blog"
+            data-slug="${escapeHtml(post.slug || '')}"
             data-title="${escapeHtml(post.title)}"
             data-author="${escapeHtml(post.author)}"
             data-reading-minutes="${escapeHtml(post.reading_minutes)}"
             data-published-at="${escapeHtml(post.published_at)}"
-            data-content="${escapeHtml(post.content || '')}"
             data-preview-image-url="${escapeHtml(resolveImageUrl(post.preview_image_url || ''))}"
           >Read full article</button>
         </article>
@@ -219,13 +266,13 @@
     `).join('');
 
     target.querySelectorAll('.js-read-blog').forEach((button) => {
-      button.addEventListener('click', () => {
-        openBlogModal({
+      button.addEventListener('click', async () => {
+        await openBlogModalBySlug({
+          slug: button.getAttribute('data-slug') || '',
           title: button.getAttribute('data-title') || '',
           author: button.getAttribute('data-author') || '',
           readingMinutes: button.getAttribute('data-reading-minutes') || '',
           publishedAt: button.getAttribute('data-published-at') || '',
-          content: button.getAttribute('data-content') || '',
           previewImageUrl: button.getAttribute('data-preview-image-url') || ''
         });
       });
@@ -236,11 +283,14 @@
     const target = document.getElementById('embedded-blog-list');
     if (!target) return;
 
+    const configuredLimit = Number.parseInt(target.getAttribute('data-limit') || '', 10);
+    const limit = Number.isFinite(configuredLimit) && configuredLimit > 0 ? configuredLimit : undefined;
+
     try {
       const response = await fetch('/api/blog/posts', { method: 'GET' });
       if (!response.ok) throw new Error(`Blog API returned ${response.status}`);
       const payload = await response.json();
-      renderEmbeddedBlog(Array.isArray(payload?.posts) ? payload.posts : []);
+      renderEmbeddedBlog(Array.isArray(payload?.posts) ? payload.posts : [], limit);
     } catch (error) {
       target.innerHTML = `
         <div class="col-12">

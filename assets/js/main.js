@@ -130,10 +130,207 @@
     }
   };
 
+  const escapeHtml = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+  const formatDate = (value) => {
+    if (!value) return 'Unscheduled';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const resolveImageUrl = (url) => {
+    if (!url) return '';
+    if (/^https?:\/\//i.test(url)) return url;
+    if (url.startsWith('/')) return url;
+    return `/${url.replace(/^\/+/, '')}`;
+  };
+
+  const postDetailsCache = new Map();
+
+  const openBlogModal = (post) => {
+    const modalRoot = document.getElementById('blogPostModal');
+    const title = document.getElementById('blogPostModalLabel');
+    const meta = document.getElementById('blogPostModalMeta');
+    const content = document.getElementById('blogPostModalContent');
+    const image = document.getElementById('blogPostModalImage');
+    if (!modalRoot || !title || !meta || !content || !image) return;
+
+    title.textContent = post.title || 'Blog Post';
+    meta.textContent = `By ${post.author || 'Unknown'} | ${post.readingMinutes || 0} min read | ${formatDate(post.publishedAt)}`;
+    content.textContent = post.content || '';
+
+    if (post.previewImageUrl) {
+      image.src = post.previewImageUrl;
+      image.style.display = 'block';
+    } else {
+      image.src = '';
+      image.style.display = 'none';
+    }
+
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+      bootstrap.Modal.getOrCreateInstance(modalRoot).show();
+    }
+  };
+
+  const openBlogModalBySlug = async (summary) => {
+    openBlogModal({
+      title: summary.title,
+      author: summary.author,
+      readingMinutes: summary.readingMinutes,
+      publishedAt: summary.publishedAt,
+      content: 'Loading article...',
+      previewImageUrl: summary.previewImageUrl
+    });
+
+    if (!summary.slug) {
+      openBlogModal({ ...summary, content: 'Unable to load full article.' });
+      return;
+    }
+
+    if (postDetailsCache.has(summary.slug)) {
+      const cached = postDetailsCache.get(summary.slug);
+      openBlogModal({
+        ...summary,
+        content: cached.content || 'No content available.',
+        previewImageUrl: resolveImageUrl(cached.preview_image_url || summary.previewImageUrl)
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/blog/posts/${encodeURIComponent(summary.slug)}`, { method: 'GET' });
+      if (!response.ok) throw new Error(`Blog detail API returned ${response.status}`);
+      const payload = await response.json();
+      const post = payload?.post;
+      postDetailsCache.set(summary.slug, post || {});
+
+      openBlogModal({
+        ...summary,
+        content: post?.content || 'No content available.',
+        previewImageUrl: resolveImageUrl(post?.preview_image_url || summary.previewImageUrl)
+      });
+    } catch (error) {
+      openBlogModal({ ...summary, content: 'Unable to load full article right now.' });
+    }
+  };
+
+  const renderEmbeddedBlog = (posts, limit) => {
+    const target = document.getElementById('embedded-blog-list');
+    if (!target) return;
+
+    const resolvedLimit = Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : undefined;
+    const visiblePosts = resolvedLimit ? posts.slice(0, resolvedLimit) : posts;
+
+    if (!visiblePosts.length) {
+      target.innerHTML = `
+        <div class="col-12">
+          <div class="glass-card p-4 text-center">
+            <h4 class="blog-card-title">No published insights yet</h4>
+            <p class="blog-card-snippet mb-0">New thought leadership articles will appear here once published.</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    target.innerHTML = visiblePosts.map((post) => `
+      <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
+        <article class="blog-card blog-card-clickable w-100">
+          ${post.preview_image_url ? `<img src="${escapeHtml(resolveImageUrl(post.preview_image_url))}" alt="${escapeHtml(post.title)}" class="blog-card-image" loading="lazy" />` : ''}
+          <h4 class="blog-card-title">${escapeHtml(post.title)}</h4>
+          <p class="blog-card-snippet">${escapeHtml(post.excerpt)}</p>
+          <p class="blog-card-meta"><strong>By:</strong> ${escapeHtml(post.author)}</p>
+          <p class="blog-card-meta"><strong>Read:</strong> ${escapeHtml(post.reading_minutes)} min | <strong>Published:</strong> ${formatDate(post.published_at)}</p>
+          <button
+            type="button"
+            class="btn btn-primary btn-sm js-read-blog"
+            data-slug="${escapeHtml(post.slug || '')}"
+            data-title="${escapeHtml(post.title)}"
+            data-author="${escapeHtml(post.author)}"
+            data-reading-minutes="${escapeHtml(post.reading_minutes)}"
+            data-published-at="${escapeHtml(post.published_at)}"
+            data-preview-image-url="${escapeHtml(resolveImageUrl(post.preview_image_url || ''))}"
+          >Read full article</button>
+        </article>
+      </div>
+    `).join('');
+
+    target.querySelectorAll('.js-read-blog').forEach((button) => {
+      button.addEventListener('click', async () => {
+        await openBlogModalBySlug({
+          slug: button.getAttribute('data-slug') || '',
+          title: button.getAttribute('data-title') || '',
+          author: button.getAttribute('data-author') || '',
+          readingMinutes: button.getAttribute('data-reading-minutes') || '',
+          publishedAt: button.getAttribute('data-published-at') || '',
+          previewImageUrl: button.getAttribute('data-preview-image-url') || ''
+        });
+      });
+    });
+  };
+
+  const initEmbeddedBlog = async () => {
+    const target = document.getElementById('embedded-blog-list');
+    if (!target) return;
+
+    const configuredLimit = Number.parseInt(target.getAttribute('data-limit') || '', 10);
+    const limit = Number.isFinite(configuredLimit) && configuredLimit > 0 ? configuredLimit : undefined;
+
+    try {
+      const response = await fetch('/api/blog/posts', { method: 'GET' });
+      if (!response.ok) throw new Error(`Blog API returned ${response.status}`);
+      const payload = await response.json();
+      renderEmbeddedBlog(Array.isArray(payload?.posts) ? payload.posts : [], limit);
+    } catch (error) {
+      target.innerHTML = `
+        <div class="col-12">
+          <div class="glass-card p-4 text-center">
+            <h4 class="blog-card-title">Insights unavailable</h4>
+            <p class="blog-card-snippet mb-0">We could not load published posts right now.</p>
+          </div>
+        </div>
+      `;
+    }
+  };
+
+  const initHiddenAdminEntry = () => {
+    const adminKeyword = 'bread';
+    let typedBuffer = '';
+
+    window.addEventListener('keydown', (event) => {
+      const isTrigger = event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'b';
+      if (isTrigger) {
+        window.location.href = '/blog';
+        return;
+      }
+
+      if (event.ctrlKey || event.altKey || event.metaKey) return;
+      if (event.key.length !== 1) return;
+
+      typedBuffer = (typedBuffer + event.key.toLowerCase()).slice(-adminKeyword.length);
+      if (typedBuffer === adminKeyword) {
+        typedBuffer = '';
+        window.location.href = '/blog';
+      }
+    });
+  };
+
   window.addEventListener('DOMContentLoaded', () => {
     initVantaParticles();
     initGlassInteractions();
     initVendors();
+    initEmbeddedBlog();
+    initHiddenAdminEntry();
 
     const preloader = document.querySelector('#preloader');
     if (preloader) {
