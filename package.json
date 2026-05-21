@@ -12,6 +12,13 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@prisma/client": "^6.16.2",
+    "@tiptap/extension-image": "^3.23.5",
+    "@tiptap/extension-link": "^3.23.5",
+    "@tiptap/extension-text-align": "^3.23.5",
+    "@tiptap/extension-underline": "^3.23.5",
+    "@tiptap/pm": "^3.23.5",
+    "@tiptap/react": "^3.23.5",
+    "@tiptap/starter-kit": "^3.23.5",
     "next": "^16.1.0",
     "prisma": "^6.16.2",
     "react": "^19.2.0",

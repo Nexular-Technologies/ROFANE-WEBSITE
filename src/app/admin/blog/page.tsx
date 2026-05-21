@@ -1,6 +1,12 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+
+const RichTextEditor = dynamic(
+  () => import("../../../components/RichTextEditor").then((m) => m.RichTextEditor),
+  { ssr: false, loading: () => <div style={{ border: "1px solid #cbd5e1", borderRadius: "8px", minHeight: "260px" }} /> }
+);
 
 type BlogStatus = "draft" | "published";
 
@@ -141,6 +147,10 @@ export default function AdminBlogPage() {
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       setFormState((prev) => ({ ...prev, [field]: event.target.value }));
     };
+
+  const onContentChange = (html: string) => {
+    setFormState((prev) => ({ ...prev, content: html }));
+  };
 
   const serializePayload = () => ({
     ...(formState.slug.trim() ? { slug: formState.slug.trim() } : {}),
@@ -343,7 +353,7 @@ export default function AdminBlogPage() {
         <input placeholder="Slug (optional on create)" value={formState.slug} onChange={onFieldChange("slug")} />
         <input placeholder="Title" value={formState.title} onChange={onFieldChange("title")} required />
         <input placeholder="Excerpt" value={formState.excerpt} onChange={onFieldChange("excerpt")} required />
-        <textarea placeholder="Content" value={formState.content} onChange={onFieldChange("content")} required />
+        <RichTextEditor value={formState.content} onChange={onContentChange} />
         <input
           placeholder="Preview image URL"
           value={formState.preview_image_url}

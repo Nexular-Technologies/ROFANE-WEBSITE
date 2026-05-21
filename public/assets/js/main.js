@@ -167,7 +167,7 @@
 
     title.textContent = post.title || 'Blog Post';
     meta.textContent = `By ${post.author || 'Unknown'} | ${post.readingMinutes || 0} min read | ${formatDate(post.publishedAt)}`;
-    content.textContent = post.content || '';
+    content.innerHTML = post.content || '';
 
     if (post.previewImageUrl) {
       image.src = post.previewImageUrl;
