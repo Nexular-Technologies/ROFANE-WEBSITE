@@ -20,17 +20,23 @@
 
     <style>
         .blog-card-clickable { cursor: pointer; }
-        .blog-modal-content { line-height: 1.7; color: #333; }
+        #blogPostModal .modal-content { background: #0d1117; border: 1px solid rgba(255,255,255,0.12); color: #e2e8f0; }
+        #blogPostModal .modal-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        #blogPostModal .modal-title { color: #ffffff; }
+        #blogPostModal .modal-body { background: #0d1117; }
+        #blogPostModal #blogPostModalMeta { color: rgba(255,255,255,0.55) !important; }
+        #blogPostModal #blogPostModalImage { background: #1a1f2e; border: 1px solid rgba(255,255,255,0.1); }
+        .blog-modal-content { line-height: 1.7; color: #d1d5db; }
         .blog-modal-content p { margin-bottom: 0.85rem; }
-        .blog-modal-content h1, .blog-modal-content h2, .blog-modal-content h3 { margin: 1.25rem 0 0.5rem; font-weight: 700; color: #111; }
+        .blog-modal-content h1, .blog-modal-content h2, .blog-modal-content h3 { margin: 1.25rem 0 0.5rem; font-weight: 700; color: #ffffff; }
         .blog-modal-content ul, .blog-modal-content ol { padding-left: 1.5rem; margin-bottom: 0.85rem; }
-        .blog-modal-content blockquote { border-left: 3px solid #0b63f6; margin: 0 0 0.85rem; padding: 0.4rem 1rem; color: #555; font-style: italic; background: #f0f6ff; border-radius: 0 6px 6px 0; }
-        .blog-modal-content code { background: #f1f5f9; border-radius: 4px; padding: 0.1rem 0.35rem; font-size: 0.88em; color: #b91c1c; }
+        .blog-modal-content blockquote { border-left: 3px solid #00d2ff; margin: 0 0 0.85rem; padding: 0.4rem 1rem; color: rgba(255,255,255,0.7); font-style: italic; background: rgba(0,210,255,0.07); border-radius: 0 6px 6px 0; }
+        .blog-modal-content code { background: rgba(255,255,255,0.08); border-radius: 4px; padding: 0.1rem 0.35rem; font-size: 0.88em; color: #7dd3fc; }
         .blog-modal-content pre { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 1rem; overflow-x: auto; margin-bottom: 0.85rem; }
         .blog-modal-content pre code { background: none; color: inherit; padding: 0; }
-        .blog-modal-content a { color: #0b63f6; text-decoration: underline; }
+        .blog-modal-content a { color: #00d2ff; text-decoration: underline; }
         .blog-modal-content img { max-width: 100%; border-radius: 8px; margin: 0.5rem 0; }
-        .blog-modal-content hr { border: none; border-top: 1px solid #e2e8f0; margin: 1.25rem 0; }
+        .blog-modal-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 1.25rem 0; }
         .blog-card {
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
@@ -142,7 +148,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="blogPostModalLabel">Blog Post</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <img id="blogPostModalImage" src="" alt="Blog preview" class="img-fluid rounded mb-3" style="display:none;">
