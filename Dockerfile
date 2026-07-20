@@ -28,11 +28,19 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Blog image uploads are written here at runtime. This path must be backed by a
+# PERSISTENT VOLUME in Coolify (mount a volume at /app/data), otherwise uploaded
+# images are lost every time the container is redeployed or restarted.
+ENV BLOG_UPLOAD_DIR=/app/data/uploads/blog
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 RUN mkdir -p ./public/uploads/blog && chown -R nextjs:nodejs ./public
+# Pre-create the upload dir owned by the runtime user so a freshly mounted named
+# volume inherits the correct ownership and the app can write to it.
+RUN mkdir -p /app/data/uploads/blog && chown -R nextjs:nodejs /app/data
 
 # Standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
