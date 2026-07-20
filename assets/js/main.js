@@ -14,6 +14,14 @@
     const container = document.getElementById('vanta-canvas');
     if (!container || typeof THREE === 'undefined') return;
 
+    // Skip the WebGL particle field where it hurts most: on touch devices
+    // (phones/tablets — heavy continuous GPU work and battery drain), on
+    // narrow viewports, and for users who ask for reduced motion. The CSS
+    // gradient + blobs still provide the animated backdrop everywhere.
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isTouch || window.innerWidth < 992 || prefersReducedMotion) return;
+
     const SEPARATION = 45, AMOUNTX = 100, AMOUNTY = 40;
     let camera, scene, renderer, particles, count = 0;
 
@@ -50,7 +58,7 @@
       scene.add(particles);
 
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.setSize(window.innerWidth, window.innerHeight);
       container.appendChild(renderer.domElement);
 
@@ -65,6 +73,7 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      if (document.hidden) return; // don't burn GPU on a backgrounded tab
       render();
     }
 
