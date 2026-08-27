@@ -1,13 +1,13 @@
 /**
  * Rofane Website - EmailJS Integration
- * Public Key: vrPfxZMgyjrWE_X91
- * Service ID: service_5kreiu7
- * Template ID: Rofane_email
+ * Public Key: zotUh0vDhpooTKoBU
+ * Service ID: service_t37sa6s
+ * Template ID: template_2u9pfhp
  */
 
 (function() {
     // 1. Initialize EmailJS with your Public Key
-    emailjs.init("vrPfxZMgyjrWE_X91");
+    emailjs.init("zotUh0vDhpooTKoBU");
 })();
 
 /**
@@ -45,14 +45,15 @@ window.onload = function() {
 
             // 3. Map form fields to the EmailJS Template Variables
             const templateParams = {
-                user_name: this.querySelector('input[name="name"]').value,
+                name: this.querySelector('input[name="name"]').value,
                 user_email: this.querySelector('input[name="email"]').value,
-                subject: this.querySelector('input[name="subject"]').value,
-                message: this.querySelector('textarea[name="message"]').value
+                title: this.querySelector('input[name="subject"]').value,
+                message: this.querySelector('textarea[name="message"]').value,
+                time: new Date().toLocaleString()
             };
 
             // 4. Send the email using Service ID and Template ID
-            emailjs.send('service_5kreiu7', 'Rofane_email', templateParams)
+            emailjs.send('service_t37sa6s', 'template_2u9pfhp', templateParams)
                 .then(function() {
                     // SUCCESS: Trigger the high-z-index success modal
                     showSuccessModal(); 
