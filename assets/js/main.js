@@ -335,11 +335,12 @@
   };
 
   window.addEventListener('DOMContentLoaded', () => {
-    initVantaParticles();
-    initGlassInteractions();
-    initVendors();
-    initEmbeddedBlog();
-    initHiddenAdminEntry();
+    // Run each initialiser independently so a failure in one (e.g. a vendor
+    // library not loading) can't block the rest — notably the blog feed.
+    [initVantaParticles, initGlassInteractions, initVendors, initEmbeddedBlog, initHiddenAdminEntry]
+      .forEach((init) => {
+        try { init(); } catch (err) { console.error((init && init.name) || 'init', 'failed:', err); }
+      });
 
     const preloader = document.querySelector('#preloader');
     if (preloader) {
