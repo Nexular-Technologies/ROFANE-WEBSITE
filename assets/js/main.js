@@ -255,7 +255,7 @@
     target.innerHTML = visiblePosts.map((post) => `
       <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
         <article class="blog-card blog-card-clickable w-100">
-          ${post.preview_image_url ? `<img src="${escapeHtml(resolveImageUrl(post.preview_image_url))}" alt="${escapeHtml(post.title)}" class="blog-card-image" loading="lazy" />` : ''}
+          ${post.preview_image_url ? `<img src="${escapeHtml(resolveImageUrl(post.preview_image_url))}" alt="${escapeHtml(post.title)}" class="blog-card-image" loading="lazy" decoding="async" />` : ''}
           <h4 class="blog-card-title">${escapeHtml(post.title)}</h4>
           <p class="blog-card-snippet">${escapeHtml(post.excerpt)}</p>
           <p class="blog-card-meta"><strong>By:</strong> ${escapeHtml(post.author)}</p>
@@ -341,6 +341,8 @@
       .forEach((init) => {
         try { init(); } catch (err) { console.error((init && init.name) || 'init', 'failed:', err); }
       });
+
+    document.querySelectorAll('.current-year').forEach((el) => { el.textContent = String(new Date().getFullYear()); });
 
     const preloader = document.querySelector('#preloader');
     if (preloader) {

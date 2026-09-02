@@ -2,9 +2,13 @@ import { randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
+import sharp from "sharp";
 import { isAdminAuthorized } from "@/lib/blog";
 
 const MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
+// Blog images never need to be wider than this; downscaling to it and
+// re-encoding as WebP keeps the served files small and fast on mobile.
+const MAX_IMAGE_WIDTH = 1600;
 
 function extensionForMimeType(mimeType: string) {
   if (mimeType === "image/jpeg") return ".jpg";
@@ -42,12 +46,29 @@ export async function POST(request: Request) {
     const uploadDir = getUploadDir();
     await mkdir(uploadDir, { recursive: true });
 
-    const extension = extensionForMimeType(file.type) || path.extname(file.name) || ".bin";
-    const fileName = `${Date.now()}-${randomUUID()}${extension}`;
-    const diskPath = path.join(uploadDir, fileName);
-    const bytes = await file.arrayBuffer();
+    const original = Buffer.from(await file.arrayBuffer());
 
-    await writeFile(diskPath, Buffer.from(bytes));
+    // Compress + resize JPEG/PNG uploads to WebP so blog images load fast.
+    // Animated/other formats (gif) and already-efficient webp pass through
+    // untouched, and any sharp failure falls back to the original bytes so an
+    // upload never fails just because optimisation did.
+    let outputBuffer: Buffer = original;
+    let extension = extensionForMimeType(file.type) || path.extname(file.name) || ".bin";
+
+    if (file.type === "image/jpeg" || file.type === "image/png") {
+      try {
+        outputBuffer = await sharp(original)
+          .resize({ width: MAX_IMAGE_WIDTH, withoutEnlargement: true })
+          .webp({ quality: 80 })
+          .toBuffer();
+        extension = ".webp";
+      } catch {
+        outputBuffer = original;
+      }
+    }
+
+    const fileName = `${Date.now()}-${randomUUID()}${extension}`;
+    await writeFile(path.join(uploadDir, fileName), outputBuffer);
 
     return NextResponse.json({
       url: `/api/blog/uploads/${fileName}`,
