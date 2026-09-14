@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/admin
+Disallow: /blog$
+
+Sitemap: https://rofane.co.za/sitemap.xml

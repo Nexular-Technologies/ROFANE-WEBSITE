@@ -336,3 +336,5 @@ a.glightbox.play-overlay:focus {
     margin-left: 5px; /* Visual nudge for triangle symmetry */
     line-height: 0;
 }
+/* SEO: heading promoted to <h1> but kept at the <h2> size it replaced */
+h1.h1-as-h2 { font-size: clamp(1.8rem, 4vw, 2.5rem) !important; }
