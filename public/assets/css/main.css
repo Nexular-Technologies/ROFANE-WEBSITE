@@ -338,3 +338,54 @@ a.glightbox.play-overlay:focus {
 }
 /* SEO: heading promoted to <h1> but kept at the <h2> size it replaced */
 h1.h1-as-h2 { font-size: clamp(1.8rem, 4vw, 2.5rem) !important; }
+
+/* ================================================================
+NEWSLETTER POPUP & CONTACT-FORM OPT-IN
+================================================================ */
+.nl-popup { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.nl-popup[hidden] { display: none; }
+.nl-popup-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.65); opacity: 0; transition: opacity 0.3s ease; }
+.nl-popup-card {
+  position: relative; width: 100%; max-width: 520px; padding: 2.25rem 2rem 1.5rem;
+  background: rgba(5, 10, 16, 0.95); border: 1px solid rgba(0, 210, 255, 0.25); border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); text-align: center; outline: none;
+  opacity: 0; transform: translateY(16px); transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.nl-popup.is-open .nl-popup-backdrop { opacity: 1; }
+.nl-popup.is-open .nl-popup-card { opacity: 1; transform: none; }
+.nl-popup-close {
+  position: absolute; top: 0.5rem; right: 0.75rem; background: none; border: 0;
+  color: rgba(255, 255, 255, 0.7); font-size: 1.9rem; line-height: 1; padding: 0.25rem 0.5rem; cursor: pointer;
+}
+.nl-popup-close:hover, .nl-popup-close:focus-visible, .nl-popup-dismiss:hover, .nl-popup-dismiss:focus-visible { color: #ffffff; }
+.nl-popup-eyebrow { color: var(--primary-blue); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.nl-popup-title { color: #ffffff; font-size: 1.6rem; font-weight: 800; line-height: 1.25; margin-bottom: 0.75rem; }
+.nl-popup-text { color: rgba(255, 255, 255, 0.78); margin-bottom: 1.25rem; }
+.nl-popup-dismiss { background: none; border: 0; color: rgba(255, 255, 255, 0.55); font-size: 0.85rem; text-decoration: underline; cursor: pointer; padding: 0.25rem; }
+@media (max-width: 575.98px) {
+  .nl-popup { align-items: flex-end; padding: 0; }
+  .nl-popup-card { max-width: none; border-radius: 20px 20px 0 0; padding: 2rem 1.25rem 1.25rem; transform: translateY(100%); }
+  .nl-popup-title { font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nl-popup-card, .nl-popup-backdrop { transition: none; }
+}
+.newsletter-optin .form-check-input { background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); }
+.newsletter-optin .form-check-input:checked { background-color: var(--primary-blue); border-color: var(--primary-blue); }
+.newsletter-optin .form-check-label { color: rgba(255, 255, 255, 0.8); }
+
+/* ================================================================
+MOBILE HORIZONTAL OVERFLOW
+The off-canvas mobile menu and background blobs sit past the right edge,
+which made phones lay the page out at double width (and pushed fixed
+bottom elements like the newsletter sheet off-screen). Clip it without
+breaking the sticky header or the menu's scroll lock. Browsers without
+overflow:clip / :has() keep the previous behaviour.
+================================================================ */
+.bg-wrapper { overflow: hidden; }
+
+@supports (overflow-x: clip) and selector(html:has(body)) {
+  html, body { overflow-x: clip; }
+  html:has(> body.mobile-nav-active) { overflow: hidden; }
+  body.mobile-nav-active { overflow: visible; }
+}

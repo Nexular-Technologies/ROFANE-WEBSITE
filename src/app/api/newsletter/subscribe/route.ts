@@ -2,9 +2,19 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 // Version-proof email check: validate a plain string, then normalise + regex.
-const bodySchema = z.object({ email: z.string().min(3).max(254) });
+const bodySchema = z.object({
+  email: z.string().min(3).max(254),
+  name: z.string().max(200).optional(),
+});
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Brevo's default contact attributes, so automations can greet people by name.
+function nameAttributes(fullName: string) {
+  const [first, ...rest] = fullName.split(/\s+/).filter(Boolean);
+  if (!first) return undefined;
+  return rest.length ? { FIRSTNAME: first, LASTNAME: rest.join(" ") } : { FIRSTNAME: first };
+}
 
 export async function POST(request: Request) {
   const apiKey = process.env.BREVO_API_KEY?.trim();
@@ -19,9 +29,11 @@ export async function POST(request: Request) {
   }
 
   let email: string;
+  let name: string;
   try {
-    const json = await request.json();
-    email = bodySchema.parse(json).email.trim().toLowerCase();
+    const parsed = bodySchema.parse(await request.json());
+    email = parsed.email.trim().toLowerCase();
+    name = (parsed.name ?? "").trim();
   } catch {
     return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
@@ -30,8 +42,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
 
-  try {
-    const res = await fetch("https://api.brevo.com/v3/contacts", {
+  const attributes = nameAttributes(name);
+
+  const addContact = (withAttributes: boolean) =>
+    fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
         "api-key": apiKey,
@@ -40,8 +54,21 @@ export async function POST(request: Request) {
       },
       // updateEnabled lets an existing contact simply be (re)added to the list
       // instead of erroring, so re-subscribes are treated as success.
-      body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
+      body: JSON.stringify({
+        email,
+        listIds: [listId],
+        updateEnabled: true,
+        ...(withAttributes && attributes ? { attributes } : {}),
+      }),
     });
+
+  try {
+    let res = await addContact(true);
+
+    // If the account rejects the name attributes, still subscribe the email.
+    if (!res.ok && res.status === 400 && attributes) {
+      res = await addContact(false);
+    }
 
     if (res.ok) {
       return NextResponse.json({ message: "You're on the list — watch your inbox." });

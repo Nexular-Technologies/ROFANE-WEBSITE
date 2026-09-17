@@ -28,6 +28,25 @@ function showSuccessModal() {
 }
 
 /**
+ * subscribeToNewsletter
+ * Adds a contact-form visitor to the Brevo newsletter list, only when they
+ * ticked the opt-in box. Runs alongside the enquiry and never blocks it.
+ */
+function subscribeToNewsletter(email, name) {
+    fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, name: name })
+    }).then(function(res) {
+        if (res.ok) {
+            try { localStorage.setItem('rofane_newsletter_popup', 'subscribed'); } catch (e) {}
+        }
+    }).catch(function(error) {
+        console.error('Newsletter opt-in failed:', error);
+    });
+}
+
+/**
  * Form Submission Logic
  */
 window.onload = function() {
@@ -44,13 +63,22 @@ window.onload = function() {
             submitBtn.disabled = true;
 
             // 3. Map form fields to the EmailJS Template Variables
+            const optIn = this.querySelector('input[name="newsletter_optin"]');
+            const wantsNewsletter = Boolean(optIn && optIn.checked);
+
             const templateParams = {
                 name: this.querySelector('input[name="name"]').value,
                 user_email: this.querySelector('input[name="email"]').value,
                 title: this.querySelector('input[name="subject"]').value,
                 message: this.querySelector('textarea[name="message"]').value,
-                time: new Date().toLocaleString()
+                time: new Date().toLocaleString(),
+                newsletter_optin: wantsNewsletter ? 'Yes' : 'No'
             };
+
+            // Only visitors who tick the box are added to the newsletter (POPIA consent).
+            if (wantsNewsletter) {
+                subscribeToNewsletter(templateParams.user_email, templateParams.name);
+            }
 
             // 4. Send the email using Service ID and Template ID
             emailjs.send('service_t37sa6s', 'template_2u9pfhp', templateParams)
