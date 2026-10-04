@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { rateLimitResponse } from "@/lib/rate-limit";
 
 // Version-proof email check: validate a plain string, then normalise + regex.
 const bodySchema = z.object({
@@ -17,6 +18,10 @@ function nameAttributes(fullName: string) {
 }
 
 export async function POST(request: Request) {
+  // Public endpoint that writes to Brevo and triggers a welcome email.
+  const limited = rateLimitResponse(request, "newsletter", 5, 60 * 60 * 1000);
+  if (limited) return limited;
+
   const apiKey = process.env.BREVO_API_KEY?.trim();
   const listId = Number(process.env.BREVO_LIST_ID);
 

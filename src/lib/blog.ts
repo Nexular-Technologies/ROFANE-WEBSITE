@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 
 const blogStatusSchema = z.enum(["draft", "published"]);
@@ -118,10 +119,21 @@ export function toBlogSlug(value: string) {
     .slice(0, 160);
 }
 
+/** Constant-time comparison so the token can't be guessed by timing. */
+function tokenMatches(candidate: string | undefined, expected: string) {
+  if (!candidate) return false;
+  const a = Buffer.from(candidate);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}
+
 export function isAdminAuthorized(request: Request) {
   const configuredToken = process.env.BLOG_ADMIN_TOKEN?.trim();
+  // Fail closed: with no token configured, nobody is an admin.
   if (!configuredToken) {
-    return true;
+    console.error("BLOG_ADMIN_TOKEN is not set - refusing all admin requests.");
+    return false;
   }
 
   const auth = request.headers.get("authorization")?.trim();
@@ -130,7 +142,7 @@ export function isAdminAuthorized(request: Request) {
     ? auth.slice(7).trim()
     : undefined;
 
-  return bearerToken === configuredToken || xToken === configuredToken;
+  return tokenMatches(bearerToken, configuredToken) || tokenMatches(xToken, configuredToken);
 }
 
 export function formatZodError(error: z.ZodError) {

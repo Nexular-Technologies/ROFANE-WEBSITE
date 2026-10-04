@@ -6,6 +6,8 @@ import {
   formatZodError,
   isAdminAuthorized,
 } from "@/lib/blog";
+import { rateLimitResponse } from "@/lib/rate-limit";
+import { sanitizeBlogHtml } from "@/lib/sanitize";
 import { prisma } from "@/lib/prisma";
 
 type RouteContext = {
@@ -13,6 +15,9 @@ type RouteContext = {
 };
 
 export async function PUT(request: Request, context: RouteContext) {
+  const limited = rateLimitResponse(request, "admin-api", 60, 15 * 60 * 1000);
+  if (limited) return limited;
+
   if (!isAdminAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -31,7 +36,11 @@ export async function PUT(request: Request, context: RouteContext) {
   try {
     const post = await prisma.blogPost.update({
       where: { slug },
-      data: parsed.data,
+      data: {
+        ...parsed.data,
+        // Stored HTML is injected with innerHTML on the public site.
+        ...(parsed.data.content ? { content: sanitizeBlogHtml(parsed.data.content) } : {}),
+      },
       select: adminBlogPostSelect,
     });
 
@@ -59,6 +68,9 @@ export async function PUT(request: Request, context: RouteContext) {
 }
 
 export async function DELETE(request: Request, context: RouteContext) {
+  const limited = rateLimitResponse(request, "admin-api", 60, 15 * 60 * 1000);
+  if (limited) return limited;
+
   if (!isAdminAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

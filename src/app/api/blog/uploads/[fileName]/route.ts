@@ -29,7 +29,9 @@ export async function GET(
   try {
     const { fileName } = await context.params;
 
-    if (!/^[a-zA-Z0-9._-]+$/.test(fileName)) {
+    // Must start alphanumeric (no dotfiles or "..") and end in a known
+    // image extension, so no path traversal or arbitrary file reads.
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9._-]*\.(jpg|jpeg|png|webp|gif)$/i.test(fileName)) {
       return new NextResponse("Invalid file name", { status: 400 });
     }
 

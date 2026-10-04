@@ -176,7 +176,13 @@
 
     title.textContent = post.title || 'Blog Post';
     meta.textContent = `By ${post.author || 'Unknown'} | ${post.readingMinutes || 0} min read | ${formatDate(post.publishedAt)}`;
-    content.textContent = post.content || '';
+    // Defence in depth: the stored HTML is sanitised on save as well.
+    // If the sanitiser is unavailable, show the text rather than raw HTML.
+    if (window.DOMPurify) {
+      content.innerHTML = window.DOMPurify.sanitize(post.content || '');
+    } else {
+      content.textContent = post.content || '';
+    }
 
     if (post.previewImageUrl) {
       image.src = post.previewImageUrl;
